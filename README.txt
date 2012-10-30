@@ -1,0 +1,1 @@
+Github synes vi skal ha en readme-fil, da synes jeg også vi skal ha en readme-fil!
