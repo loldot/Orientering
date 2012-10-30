@@ -1,19 +1,17 @@
-@media screen
-		{
-			* {	margin:0; padding:0;}
-			
-			h1
-			{
-			font-size:20pt;
-			font-family:"Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-			color:red;
-		
-			}
-			
-		
-		
-		
-			
-			
-			
-		}
+@media screen {
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	h1 {
+		font-size: 20pt;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+		color: red;
+		float: centre;
+		margin-left: auto;
+		margin-right: auto;
+		width: 50%;
+		padding-top:20px;
+	}
+}
