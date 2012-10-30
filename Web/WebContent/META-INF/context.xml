@@ -3,7 +3,7 @@
 <Context>         
    <Resource name="jdbc/noeheftig" auth="Container"
        type="javax.sql.DataSource"
-       username="h131185_base" password="uHqh9n"       
+       username="*****" password="********"       
        driverClassName="com.mysql.jdbc.Driver"
        url="jdbc:mysql://eple.hib.no:3306/h131185_base" 
        maxActive="8"
