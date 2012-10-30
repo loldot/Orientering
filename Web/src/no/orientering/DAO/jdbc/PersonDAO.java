@@ -1,6 +1,7 @@
 package no.orientering.DAO.jdbc;
 
 import java.sql.Connection;
+import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,14 +12,13 @@ import javax.naming.NamingException;
 
 import no.orientering.models.Person;
 
-
-
-
 public class PersonDAO {
-	
-	
+
 	private Connection conn;
-	public PersonDAO(){
+
+	private SqlCommands sqlCmd = new SqlCommands();
+
+	public PersonDAO() {
 		try {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 		} catch (Exception e) {
@@ -26,6 +26,7 @@ public class PersonDAO {
 			e.printStackTrace();
 		}
 	}
+
 	public Person getPerson(int personID) {
 
 		Connection conn = null;
@@ -38,29 +39,30 @@ public class PersonDAO {
 			conn.setAutoCommit(false);
 
 			String sqlStr = "Select * from `Persons` where ID = ?";
-			
+
 			ps = conn.prepareStatement(sqlStr);
 			ps.setInt(0, personID);
-			
+
 			rs = ps.executeQuery();
-			if(!rs.first())
+			if (!rs.first())
 				throw new Exception("Feil i getPerson");
-			
+
 			p = new Person();
 			p.setID(rs.getInt("ID"));
 			p.setBirthYear(rs.getInt("BirthYear"));
 			p.setFirstName(rs.getString("FirstName"));
 			p.setLastName(rs.getString("LastName"));
 			p.setPhone(rs.getString("Phone"));
-			
+
 		} catch (Exception feil) {
 
 		}
 
 		return p;
 	}
-	public List<Person> getPersons(){
-		
+
+	public List<Person> getPersons() {
+
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
@@ -71,17 +73,17 @@ public class PersonDAO {
 			conn.setAutoCommit(false);
 
 			String sqlStr = "Select * from `Persons`";
-			
+
 			ps = conn.prepareStatement(sqlStr);
-					
+
 			rs = ps.executeQuery();
-			if(!rs.first())
+			if (!rs.first())
 				throw new Exception("Feil i getPerson");
-			
+
 			Person p = null;
 			persons = new ArrayList<Person>();
-			
-			while(rs.next()){
+
+			while (rs.next()) {
 				p = new Person();
 				p.setID(rs.getInt("ID"));
 				p.setBirthYear(rs.getInt("BirthYear"));
@@ -90,39 +92,71 @@ public class PersonDAO {
 				p.setPhone(rs.getString("Phone"));
 				persons.add(p);
 			}
-			
-			
+
 		} catch (Exception feil) {
 
 		}
 
 		return persons;
-		
+
 	}
-	public boolean deletePerson(int id){
+
+	public boolean deletePerson(int id) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		boolean deleted = true;
-		try
-		{
+		try {
 			conn.setAutoCommit(false);
-			
-			String sqlStr ="Delete from `Person` where ID = ?";
-			
+
+			String sqlStr = "Delete from `Person` where ID = ?";
+
 			ps = conn.prepareStatement(sqlStr);
 			ps.setInt(0, id);
-			
+
 			rs = ps.executeQuery();
-			
-			if(!rs.first())
+
+			if (!rs.first())
 				deleted = false;
-			
-			
-		}catch(Exception ex){
-			
-			
+
+		} catch (Exception ex) {
+
 		}
 		return deleted;
 	}
-	
+
+	public boolean savePerson(Person p) {
+		boolean saved = false;
+		if (p.getID() > 0) {
+			saved = updatePerson(p);
+		} else
+			saved = saveNewPerson(p);
+
+		return saved;
+	}
+
+	private boolean saveNewPerson(Person p) {
+
+		boolean saved = false;
+		String sqlStr = "Insert into `Persons` set "
+				+ "(`FirstName`,`LastName`,`Phone`,`BirthYear`,`Address`) "
+				+ "Values (?,?,?,?,?)";
+		
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqlStr);
+			saved = sqlCmd.ExecuteNonQuery(ps) > 0;
+		} catch (Exception e) {
+			
+		}
+		
+		
+		return saved;
+	}
+
+	private boolean updatePerson(Person p) {
+
+		boolean updated = false;
+		//String sqlStr = "Update `Persons`set "
+				//+ "("
+		return updated;
+	}
 }

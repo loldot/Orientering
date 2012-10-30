@@ -5,7 +5,7 @@
        type="javax.sql.DataSource"
        username="h131185_base" password="uHqh9n"       
        driverClassName="com.mysql.jdbc.Driver"
-       url="jdbc:mysql://eple.hib.no:3306/h131185_base" 
+       url="jdbc:mysql://193.90.244.168:1433/h131185_base" 
        maxActive="8"
        factory="org.apache.commons.dbcp.BasicDataSourceFactory" /> 
 </Context>

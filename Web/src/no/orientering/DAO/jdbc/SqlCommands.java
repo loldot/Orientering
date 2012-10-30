@@ -71,4 +71,16 @@ public class SqlCommands {
 
 		return rowsAff;
 	}
+	public int ExecuteNonQuery(PreparedStatement ps) {
+		int rowsAff = 0;
+		try {
+					
+			rowsAff = ps.executeUpdate();
+
+		} catch (Exception ex) {
+			System.out.println(ex);
+		}
+
+		return rowsAff;
+	}
 }
