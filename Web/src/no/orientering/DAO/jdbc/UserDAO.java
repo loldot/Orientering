@@ -19,11 +19,12 @@ public class UserDAO
 	public User LogIn(String userName, String password) throws AuthenticationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
-		Statement st = null;
+		ResultSet rs = null;
+		User loggedIn = null;
 		
 		try
 		{
-			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/TOD141_Medlemsbase");
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			conn.setAutoCommit(false);
 			
 			MessageDigest pwHash = MessageDigest.getInstance("SHA-256");
@@ -32,12 +33,22 @@ public class UserDAO
 			String hash = ByteUtil.BytesToHexString(pwHash.digest());
 			
 			String sql = "SELECT * FROM `Users` WHERE `userName` = ? AND `passwordHash`=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(0, userName);
+			ps.setString(1, hash);
 			
-			
+			rs = ps.executeQuery();
+			if(!rs.first())
+				throw new Exception("Feil brukernavn/passord");
+			//loggedIn.set
 			
 		} catch(Exception feil){
 			throw new AuthenticationException("Feil ved innlogging!", feil);
+		} finally {
+			DatabaseHelper.close(conn);
+			DatabaseHelper.close(ps);
+			DatabaseHelper.close(rs);
 		}
-		return null;
+		return loggedIn;
 	}
 }

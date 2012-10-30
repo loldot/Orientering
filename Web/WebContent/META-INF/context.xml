@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Context>         
-   <Resource name="jdbc/TOD141_Medlemsbase" auth="Container"
+   <Resource name="jdbc/noeheftig" auth="Container"
        type="javax.sql.DataSource"
        username="h131185_base" password="uHqh9n"       
        driverClassName="com.mysql.jdbc.Driver"
