@@ -1,16 +1,11 @@
 package no.orientering.DAO.jdbc;
 
 import java.security.MessageDigest;
-import java.util.Arrays;
-
 import javax.security.sasl.AuthenticationException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 import no.orientering.models.User;
 import no.orientering.utils.ByteUtil;
 
