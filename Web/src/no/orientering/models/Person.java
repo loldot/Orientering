@@ -6,6 +6,7 @@ public class Person {
 	private String lastName;
 	private String phone;
 	private int birthYear;
+	private String address;
 	
 	public int getID() {
 		return ID;
@@ -21,6 +22,14 @@ public class Person {
 	}
 	
 	
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public String getFirstName() {
 		return firstName;
 	}

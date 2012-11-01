@@ -140,23 +140,46 @@ public class PersonDAO {
 		String sqlStr = "Insert into `Persons` set "
 				+ "(`FirstName`,`LastName`,`Phone`,`BirthYear`,`Address`) "
 				+ "Values (?,?,?,?,?)";
-		
+
 		try {
 			PreparedStatement ps = conn.prepareStatement(sqlStr);
+			ps.setString(0, p.getFirstName());
+			ps.setString(1,p.getLastName());
+			ps.setString(2,p.getPhone());
+			ps.setInt(3, p.getBirthYear());
+			ps.setString(4,p.getAddress());
+			
+			
 			saved = sqlCmd.ExecuteNonQuery(ps) > 0;
 		} catch (Exception e) {
-			
+
 		}
-		
-		
+
 		return saved;
 	}
 
 	private boolean updatePerson(Person p) {
 
 		boolean updated = false;
-		//String sqlStr = "Update `Persons`set "
-				//+ "("
+		String sqlStr = "Update `Persons`set " + "FirstName = ?,"
+				+ "LastName = ?," + "Phone = ?," + "BirthYear = ?,"
+				+ "Address = ?" + " WHERE `ID`= ?";
+
+		try {
+			PreparedStatement ps = conn.prepareStatement(sqlStr);
+			ps.setString(0, p.getFirstName());
+			ps.setString(1,p.getLastName());
+			ps.setString(2,p.getPhone());
+			ps.setInt(3, p.getBirthYear());
+			ps.setString(4,p.getAddress());
+			ps.setInt(5,p.getID());
+			
+			updated = sqlCmd.ExecuteNonQuery(ps) > 0;
+			
+		}catch (Exception ex){
+			
+		}
+		
 		return updated;
 	}
 }
