@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import no.orientering.models.Article;
-import no.orientering.models.Person;
+
 
 public class ArticleDAO {
 
