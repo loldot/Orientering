@@ -9,7 +9,10 @@
 <body>
 	<jsp:include page="top.jsp"></jsp:include>
 	<div id="content">
-		<div class="article"></div>
+		<div class="article">
+		<div class="article_head"></div>
+		<div class="article_content"></div>
+		</div>
 
 	</div>
 

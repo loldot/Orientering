@@ -64,7 +64,7 @@ public class ArticleDAO {
 			if (!rs.next())
 				throw new SQLException("No match");
 
-			rs.
+			
 			art = new Article();
 			art.setID(rs.getInt("ID"));
 			art.setContent(rs.getString("Content"));

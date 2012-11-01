@@ -3,6 +3,7 @@ package no.orientering.controllers;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -45,11 +46,13 @@ public class ArticleController extends HttpServlet {
 			}else {
 				//liste
 				List<Article> artList = adao.getArticles();
-				
+				request.setAttribute("articles",artList);
 			}
 			
-		}
 			
+		}
+		RequestDispatcher dispatcher =	request.getRequestDispatcher("WEB-INF/articles.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	/**
