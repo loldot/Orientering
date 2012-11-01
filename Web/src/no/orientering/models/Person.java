@@ -58,4 +58,11 @@ public class Person {
 	public void setBirthYear(int birthYear) {
 		this.birthYear = birthYear;
 	}
+	
+	@Override
+	public String toString() {
+		return "[id=" + ID + ", firstName=" + firstName + ", lastName=" +
+				lastName + ", phone=" + phone + ", birthYear=" + birthYear + 
+				", address="+ address + "]";
+	}
 }

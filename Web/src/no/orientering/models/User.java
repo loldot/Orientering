@@ -51,4 +51,11 @@ public class User {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	
+	@Override
+	public String toString() {
+		return "[userName=" + userName + ", Personalia=" + personalia + 
+				", friend=" + friend + ", emergencyContact=" + emergencyContact +
+				", team" + team + "]";
+	}
 }

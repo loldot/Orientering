@@ -1,21 +1,30 @@
 package no.orientering.actions;
 
-import java.util.List;
+import no.orientering.DAO.jdbc.ArticleDAO;
+import no.orientering.models.Article;
 
-import no.orientering.DAO.jdbc.PersonDAO;
-import no.orientering.models.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class ArticleActions {
-	public void postArticle(Article art){
-		
+	private Gson gson = new GsonBuilder().create();
+	
+	public void postArticle(String document){
+		ArticleDAO articles = new ArticleDAO();		
+		Article newArt = gson.fromJson(document, Article.class);
+		articles.saveArticle(newArt);
 	}
-	public void putArticle(Article art){
-		
+	public void putArticle(String document){
+		ArticleDAO articles = new ArticleDAO();
+		Article newArt = gson.fromJson(document, Article.class);
+		articles.saveArticle(newArt);
 	}
-	public List<Article> getArticle(){
-		return null;
+	public String getArticle(){
+		ArticleDAO articles = new ArticleDAO();
+		return gson.toJson(articles.getArticles());
 	}
-	public Article getArticle(int id){
-		return null;
+	public String getArticle(int id){
+		ArticleDAO articles = new ArticleDAO();
+		return gson.toJson(articles.getArticle(id));
 	}
 }

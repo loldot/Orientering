@@ -20,4 +20,8 @@ public class Organization {
 	public int getPoints() {
 		return points;
 	}
+	@Override
+	public String toString() {
+		return name;
+	}
 }
