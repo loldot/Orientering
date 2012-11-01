@@ -3,11 +3,24 @@ package no.orientering.models;
 import java.util.Date;
 
 public class Article {
+	private int ID;
 	private String title;
 	private String content;
 	private User author;
 	private Date publishedDate;
 	
+	public Article(){
+		ID = 0;
+	}
+	public Article(int ID){
+		this.ID = ID;
+	}
+	public int getID() {
+		return ID;
+	}
+	public void setID(int iD) {
+		ID = iD;
+	}
 	public User getAuthor() {
 		return author;
 	}
