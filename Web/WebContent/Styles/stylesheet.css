@@ -12,6 +12,26 @@
 		margin-left: auto;
 		margin-right: auto;
 		width: 50%;
-		padding-top:20px;
+		padding-top: 20px;
+	}
+	.article {
+		border: 1px solid #E7E7E7;
+		border-left-color: #D3D3D3;
+		border-right-color: #D3D3D3;
+		border-top-left-radius: 5px;
+		border-top-right-radius: 5px;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		padding: 10px;
+		margin: 10px;
+	}
+	.article_head {
+		
+	}
+	.article_title {
+		
+	}
+	.article_content {
+		
 	}
 }
