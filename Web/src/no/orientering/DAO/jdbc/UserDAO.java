@@ -1,12 +1,17 @@
 package no.orientering.DAO.jdbc;
 
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import javax.security.sasl.AuthenticationException;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +20,19 @@ import no.orientering.utils.ByteUtil;
 
 public class UserDAO 
 {
+	private String SHA256(String str){
+		String hash = null;
+		
+		try{
+			MessageDigest pwHash = MessageDigest.getInstance("SHA-256");
+			pwHash.update(str.getBytes("UTF-8"));
+			hash = ByteUtil.BytesToHexString(pwHash.digest());
+		}catch(NoSuchAlgorithmException aEx){
+		}catch(UnsupportedEncodingException encEx){
+		}
+		return hash;
+	}
+	
 	public User LogIn(String userName, String password) throws AuthenticationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
@@ -26,10 +44,7 @@ public class UserDAO
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			conn.setAutoCommit(true);
 			
-			MessageDigest pwHash = MessageDigest.getInstance("SHA-256");
-			pwHash.update(password.getBytes("UTF-8"));
-			
-			String hash = ByteUtil.BytesToHexString(pwHash.digest());
+			String hash = SHA256(password);
 			
 			String sql = "SELECT * FROM `Users` WHERE `userName` = ? AND `passwordHash`=?";
 			ps = conn.prepareStatement(sql);
@@ -88,7 +103,7 @@ public class UserDAO
 		while(rs.next()){
 			User user = new User();
 			
-			user.setUserId(rs.getInt("userID"));
+			user.setUserId(rs.getInt("ID"));
 			user.setPassword(rs.getNString("passwordHash"));
 			user.setUserName(rs.getNString("userName"));
 			
@@ -126,28 +141,37 @@ public class UserDAO
 		return deleted;
 	}
 	
-	public boolean insertPerson(int id) {
+	public int insertPerson(User user) {
+		int insertedId = -1;
 		Connection conn = null;
-		PreparedStatement ps = null;
+		CallableStatement cs = null;
 
-		boolean insert = true;
 		try
 		{
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			conn.setAutoCommit(false);
 
-			String sqlStr = "DELETE FROM `User` WHERE ID = ?";
+			String sqlStr = "{CALL InsertUser(?,?,?,?,?,?)}";
 
-			ps = conn.prepareStatement(sqlStr);
-			ps.setInt(0, id);
+			cs = conn.prepareCall(sqlStr);
+			cs.setInt(0, user.getUserId());
+			cs.setString(1, user.getUserName());
+			cs.setString(2, SHA256(user.getPassword()));
 
-			insert = ps.execute();
+			cs.registerOutParameter(0, Types.INTEGER);
+			
+			PersonDAO persons = new PersonDAO();
+			persons.savePerson(user.getPersonalia());
+			
+			cs.executeQuery();
+
+			insertedId = cs.getInt(0);
 		} catch (Exception ex) {
 		} finally {
 			DatabaseHelper.close(conn);
-			DatabaseHelper.close(ps);
+			DatabaseHelper.close(cs);
 		}
-		return insert;
+		return insertedId;
 	}
 
 }
