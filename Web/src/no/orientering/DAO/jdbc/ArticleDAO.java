@@ -28,7 +28,7 @@ public class ArticleDAO {
 	public List<Article> getArticles() {
 		List<Article> artList = new ArrayList<Article>();
 
-		String sqlStr = "Select * from articles";
+		String sqlStr = "SELECT * FROM articles ORDER BY PublishedDate";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sqlStr);
