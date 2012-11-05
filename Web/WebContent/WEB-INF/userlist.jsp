@@ -45,7 +45,7 @@
 					<td></td>
 					<td></td>
 					<td></td>
-					<td><a href="PersonController?personID=0">Ny person</a></td>
+					<td><a href="UserController?userID=0">Ny person</a></td>
 					<td></td>
 
 				</tr>

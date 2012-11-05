@@ -12,10 +12,37 @@
   <servlet>
     <servlet-name>JerseyTest</servlet-name>
     <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-    <load-on-startup>1</load-on-startup>
+    <load-on-startup>2</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>JerseyTest</servlet-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/jersey</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>PersonController</servlet-name>
+    <servlet-class>no.orientering.controllers.PersonController</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PersonController</servlet-name>
+    <url-pattern>/PersonController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UserController</servlet-name>
+    <servlet-class>no.orientering.controllers.UserController</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserController</servlet-name>
+    <url-pattern>/UserController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>ArticleController</servlet-name>
+    <servlet-class>no.orientering.controllers.ArticleController</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ArticleController</servlet-name>
+    <url-pattern>/ArticleController</url-pattern>
   </servlet-mapping>
 </web-app>
