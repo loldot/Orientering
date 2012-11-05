@@ -2,13 +2,14 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="header.jsp" />
-<title>Persons list</title>
+<title>Brukere</title>
 
 
 </head>
 <body>
 	<jsp:include page="top.jsp"></jsp:include>
 	<div id="content">
+
 		<table>
 			<thead>
 				<tr class="">
@@ -16,20 +17,22 @@
 					<td>Etternavn</td>
 					<td>Tlf</td>
 					<td>Adresse</td>
-					<td></td>
+					<td>Fødselsår</td>
+					<td>Kontaktperson</td>
 					<td></td>
 					<td></td>
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="person" items="${persons}">
+				<c:forEach var="user" items="${users}">
 					<tr>
-						<td>${person.firstName}</td>
-						<td>${person.lastName}</td>
-						<td>${person.phone}</td>
-						<td>${person.address}</td>
-						<td>${person.birthYear}</td>
-						<td><a href="PersonController?personID=${person.ID}">Endre</a></td>
+						<td>${user.personalia.firstName}</td>
+						<td>${user.personalia.lastName}</td>
+						<td>${user.personalia.phone}</td>
+						<td>${user.personalia.address}</td>
+						<td>${user.personalia.birthYear}</td>
+						<td>${user.emergencyContact.firstName} ${user.emergencyContact.lastName}</td>
+						<td><a href="UserController?userID=${user.ID}">Endre</a></td>
 						<td></td>
 
 					</tr>
