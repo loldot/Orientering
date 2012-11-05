@@ -1,6 +1,7 @@
 package no.orientering.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,19 +38,27 @@ public class PersonController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PersonDAO pd = new PersonDAO();
-		String URL = null;
+		String URL = "WEB-INF/personlist.jsp";
 		String id = request.getParameter("personID");
 		if (!NetHelp.isNullOrEmpty(id)) {
 			
-			Person p = pd.getPerson(Integer.parseInt(id));
-			if(p != null){
-				
-				//fill edits
-				
+			int pID = Integer.parseInt(id);
+			if (pID > 0){
+				Person p = pd.getPerson(Integer.parseInt(id));
+				if(p != null){
+					URL = "WEB-INF/personview.jsp";
+					request.setAttribute("person", p);
+				}
 			}
+			
+		}else
+		{
+			List<Person> plist = pd.getPersons();
+			URL ="WEB-INF/personlist.jsp";
+			request.setAttribute("Persons", plist);
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(URL);
-
+		dispatcher.forward(request, response);
 	}
 
 	/**
@@ -68,7 +77,7 @@ public class PersonController extends HttpServlet {
 
 			session = request.getSession();
 
-			p = (Person) session.getAttribute("selectedperson");
+			p = (Person) request.getAttribute("person");
 			if (p == null) {
 				// ny dude
 				p = makePerson(request);
