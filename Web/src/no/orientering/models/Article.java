@@ -2,6 +2,12 @@ package no.orientering.models;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+
+@XmlRootElement(name = "article")
+@XmlType(propOrder = { "id", "title", "content", "author", "publishedDate" })
 public class Article {
 	private int ID;
 	private String title;

@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,8 +81,8 @@ public class ArticleDAO {
 		return art;
 	}
 
-	public boolean saveArticle(Article art) {
-		boolean saved = false;
+	public int saveArticle(Article art) {
+		int saved = -1;
 		if (art.getID() < 1) {
 			saved = saveNew(art);
 		} else {
@@ -91,31 +92,40 @@ public class ArticleDAO {
 		return saved;
 	}
 
-	private boolean saveNew(Article art) {
-		boolean saved = false;
+	private int saveNew(Article art) {
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int saved = -1;
 
 		String sqlStr = "Insert into `Articles` set (`Title`,`Content`"
 				+ "`PublishedDate`,`AuthorID`) Values" + "(?,?,?,?)";
 		try {
-			PreparedStatement ps = conn.prepareStatement(sqlStr);
+			ps = conn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(0, art.getTitle());
 			ps.setString(1, art.getContent());
 			ps.setDate(2, new java.sql.Date(art.getPublishedDate().getTime()));
 			ps.setInt(3, art.getAuthor().getUserId());
-
-			saved = sqlCmd.ExecuteNonQuery(ps) > 0;
+			
+			sqlCmd.ExecuteNonQuery(ps);
+			rs = ps.getGeneratedKeys();
+			
+			if(rs.next())
+				return rs.getInt(1);
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally{
+			DatabaseHelper.close(ps);
+			DatabaseHelper.close(rs);
 		}
 		return saved;
 
 	}
 
-	private boolean updateArticle(Article art) {
+	private int updateArticle(Article art) {
 
-		boolean updated = false;
+		int updated = -1;
 		String sqlStr = "Update Articles set " + "Title = ?," + "Content = ?,"
 				+ "AuthorID = ?" + " WHERE ID = ?";
 		try {
@@ -125,7 +135,8 @@ public class ArticleDAO {
 			ps.setInt(2, art.getAuthor().getUserId());
 			ps.setInt(3, art.getID());
 
-			updated = sqlCmd.ExecuteNonQuery(ps) > 0;
+			sqlCmd.ExecuteNonQuery(ps);
+			return art.getID();
 
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

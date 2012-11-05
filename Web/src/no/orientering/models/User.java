@@ -1,5 +1,10 @@
 package no.orientering.models;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
+
+@XmlRootElement(name = "user")
+@XmlType(propOrder = { "id", "userName"})
 public class User {
 	int userId;
 	String userName, password;
