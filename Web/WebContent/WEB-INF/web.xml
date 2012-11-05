@@ -10,13 +10,12 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-    <description></description>
-    <display-name>APIController</display-name>
-    <servlet-name>APIController</servlet-name>
-    <servlet-class>no.orientering.controller.APIController</servlet-class>
+    <servlet-name>JerseyTest</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>APIController</servlet-name>
-    <url-pattern>/API</url-pattern>
+    <servlet-name>JerseyTest</servlet-name>
+    <url-pattern>/*</url-pattern>
   </servlet-mapping>
 </web-app>
