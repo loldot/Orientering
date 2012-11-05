@@ -8,18 +8,20 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.NamingException;
+
 import no.orientering.models.Article;
 
 
 public class ArticleDAO {
 
-	private Connection conn;
+	private Connection oldConn;
 
 	private SqlCommands sqlCmd = new SqlCommands();
 
 	public ArticleDAO() {
 		try {
-			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			//oldConn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -28,27 +30,37 @@ public class ArticleDAO {
 
 	public List<Article> getArticles() {
 		List<Article> artList = new ArrayList<Article>();
+		
+		Connection conn = null;
+		Statement s = null;
+		ResultSet rs = null;
 
-		String sqlStr = "SELECT * FROM articles ORDER BY PublishedDate";
+		String sqlStr = "SELECT * FROM articles ORDER BY publishDate";
 
 		try {
-			PreparedStatement ps = conn.prepareStatement(sqlStr);
-			ResultSet rs = sqlCmd.makeResultSet(ps);
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			conn.setAutoCommit(true);
+			s = conn.createStatement();
+			rs = s.executeQuery(sqlStr);
 			Article art = null;
 
 			while (rs.next()) {
 				art = new Article();
 				art.setID(rs.getInt("ID"));
-				art.setContent(rs.getString("Content"));
-				art.setPublishedDate(rs.getDate("PublishedDate"));
-				art.setTitle(rs.getString("Title"));
+				art.setContent(rs.getString("content"));
+				art.setPublishedDate(rs.getDate("publishDate"));
+				art.setTitle(rs.getString("title"));
 				// art.setAuthor
 				artList.add(art);
 			}
-
-		} catch (SQLException e) {
+		}
+		catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			DatabaseHelper.close(s);
+			DatabaseHelper.close(rs);
+			DatabaseHelper.close(conn);
 		}
 
 		return artList;
@@ -59,7 +71,7 @@ public class ArticleDAO {
 
 		String sqlStr = "Select * from articles where ID = ?";
 		try {
-			PreparedStatement ps = conn.prepareStatement(sqlStr);
+			PreparedStatement ps = oldConn.prepareStatement(sqlStr);
 			ps.setInt(0, ID);
 			ResultSet rs = sqlCmd.makeResultSet(ps);
 			if (!rs.next())
@@ -100,7 +112,7 @@ public class ArticleDAO {
 		String sqlStr = "Insert into `Articles` set (`Title`,`Content`"
 				+ "`PublishedDate`,`AuthorID`) Values" + "(?,?,?,?)";
 		try {
-			ps = conn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
+			ps = oldConn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(0, art.getTitle());
 			ps.setString(1, art.getContent());
 			ps.setDate(2, new java.sql.Date(art.getPublishedDate().getTime()));
@@ -129,7 +141,7 @@ public class ArticleDAO {
 		String sqlStr = "Update Articles set " + "Title = ?," + "Content = ?,"
 				+ "AuthorID = ?" + " WHERE ID = ?";
 		try {
-			PreparedStatement ps = conn.prepareStatement(sqlStr);
+			PreparedStatement ps = oldConn.prepareStatement(sqlStr);
 			ps.setString(0, art.getTitle());
 			ps.setString(1, art.getContent());
 			ps.setInt(2, art.getAuthor().getUserId());
