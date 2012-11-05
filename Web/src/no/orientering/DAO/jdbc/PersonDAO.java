@@ -41,7 +41,7 @@ public class PersonDAO {
 			String sqlStr = "Select * from `Persons` where ID = ?";
 
 			ps = conn.prepareStatement(sqlStr);
-			ps.setInt(0, personID);
+			ps.setInt(1, personID);
 
 			rs = ps.executeQuery();
 			if (!rs.first())
@@ -53,11 +53,14 @@ public class PersonDAO {
 			p.setFirstName(rs.getString("FirstName"));
 			p.setLastName(rs.getString("LastName"));
 			p.setPhone(rs.getString("Phone"));
-
+			p.setAddress(rs.getString("Address"));
+			conn.close();
 		} catch (Exception feil) {
-
+			String f = feil.getMessage();
+			System.out.println(f);
 		}
 
+		
 		return p;
 	}
 
@@ -77,8 +80,9 @@ public class PersonDAO {
 			ps = conn.prepareStatement(sqlStr);
 
 			rs = ps.executeQuery();
-			/*if (!rs.first())
-				throw new Exception("Feil i getPerson");*/
+			/*
+			 * if (!rs.first()) throw new Exception("Feil i getPerson");
+			 */
 
 			Person p = null;
 			persons = new ArrayList<Person>();
@@ -94,6 +98,7 @@ public class PersonDAO {
 				persons.add(p);
 			}
 
+			conn.close();
 		} catch (Exception feil) {
 			String f = feil.getMessage();
 			System.out.println(f);
@@ -169,12 +174,12 @@ public class PersonDAO {
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sqlStr);
-			ps.setString(0, p.getFirstName());
-			ps.setString(1, p.getLastName());
-			ps.setString(2, p.getPhone());
-			ps.setInt(3, p.getBirthYear());
-			ps.setString(4, p.getAddress());
-			ps.setInt(5, p.getID());
+			ps.setString(1, p.getFirstName());
+			ps.setString(2, p.getLastName());
+			ps.setString(3, p.getPhone());
+			ps.setInt(4, p.getBirthYear());
+			ps.setString(5, p.getAddress());
+			ps.setInt(6, p.getID());
 
 			updated = sqlCmd.ExecuteNonQuery(ps) > 0;
 

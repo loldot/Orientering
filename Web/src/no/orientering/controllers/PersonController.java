@@ -41,23 +41,22 @@ public class PersonController extends HttpServlet {
 		String URL = "WEB-INF/personlist.jsp";
 		String id = request.getParameter("personID");
 		if (!NetHelp.isNullOrEmpty(id)) {
-			
+
 			int pID = Integer.parseInt(id);
 			URL = "WEB-INF/personview.jsp";
-			if (pID > 0){
+			if (pID > 0) {
 				Person p = pd.getPerson(Integer.parseInt(id));
-				if(p != null){
-					
+				if (p != null) {
+
 					request.setAttribute("person", p);
 				}
-			}else {
-				URL ="WEB-INF/personview.jsp";
+			} else {
+				URL = "WEB-INF/personview.jsp";
 			}
-			
-		}else
-		{
+
+		} else {
 			List<Person> plist = pd.getPersons();
-			URL ="WEB-INF/personlist.jsp";
+			URL = "WEB-INF/personlist.jsp";
 			request.setAttribute("persons", plist);
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(URL);
@@ -80,13 +79,15 @@ public class PersonController extends HttpServlet {
 
 			session = request.getSession();
 
-			p = (Person) request.getAttribute("person");
-			if (p == null) {
+			String id = request.getParameter("personID");
+
+			if (NetHelp.isNullOrEmpty(id)) {
 				// ny dude
 				p = makePerson(request);
 
 			} else {
-				p = editPerson(p, request);
+
+				p = editPerson(Integer.parseInt(id), request);
 			}
 
 			if (!validatePerson(p)) {
@@ -126,18 +127,11 @@ public class PersonController extends HttpServlet {
 		}
 	}
 
-	private Person editPerson(Person p, HttpServletRequest request) {
-
-		if (p.getID() == 0) {
-			try {
-				throw new Exception("Ugyldig person");
-
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				p = null;
-				e.printStackTrace();
-			}
-		} else {
+	private Person editPerson(int id, HttpServletRequest request) {
+		Person p = null;
+		if (id > 0) {
+			p = new Person();
+			p.setID(id);
 			p.setFirstName(request.getParameter("firstName"));
 			p.setLastName(request.getParameter("lastName"));
 			p.setBirthYear(Integer.parseInt(request.getParameter("birthYear")));

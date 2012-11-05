@@ -32,21 +32,22 @@ public class SqlCommands {
 			PreparedStatement ps = conn.prepareStatement(sqlStr);
 
 			rs = ps.executeQuery();
-
+			conn.close();
 		} catch (Exception ex) {
 			System.out.println(ex);
-		} 
+		}
 		return rs;
 	}
+
 	public ResultSet makeResultSet(PreparedStatement ps) {
 		ResultSet rs = null;
 		try {
-			
-			rs = ps.executeQuery();
 
+			rs = ps.executeQuery();
+			conn.close();
 		} catch (Exception ex) {
 			System.out.println(ex);
-		} 
+		}
 		return rs;
 	}
 
@@ -64,19 +65,20 @@ public class SqlCommands {
 
 			ps = conn.prepareStatement(sqlStr);
 			rowsAff = ps.executeUpdate();
-
+			conn.close();
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
 
 		return rowsAff;
 	}
+
 	public int ExecuteNonQuery(PreparedStatement ps) {
 		int rowsAff = 0;
 		try {
-					
-			rowsAff = ps.executeUpdate();
 
+			rowsAff = ps.executeUpdate();
+			conn.close();
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
