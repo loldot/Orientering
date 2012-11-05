@@ -18,46 +18,44 @@ import java.util.List;
 import no.orientering.models.User;
 import no.orientering.utils.ByteUtil;
 
-public class UserDAO 
-{
-	private String SHA256(String str){
+public class UserDAO {
+	private String SHA256(String str) {
 		String hash = null;
-		
-		try{
+
+		try {
 			MessageDigest pwHash = MessageDigest.getInstance("SHA-256");
 			pwHash.update(str.getBytes("UTF-8"));
 			hash = ByteUtil.BytesToHexString(pwHash.digest());
-		}catch(NoSuchAlgorithmException aEx){
-		}catch(UnsupportedEncodingException encEx){
+		} catch (NoSuchAlgorithmException aEx) {
+		} catch (UnsupportedEncodingException encEx) {
 		}
 		return hash;
 	}
-	
-	public User LogIn(String userName, String password) throws AuthenticationException {
+
+	public User LogIn(String userName, String password)
+			throws AuthenticationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User loggedIn = null;
-		
-		try
-		{
+
+		try {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			conn.setAutoCommit(true);
-			
+
 			String hash = SHA256(password);
-			
+
 			String sql = "SELECT * FROM `Users` WHERE `userName` = ? AND `passwordHash`=?";
 			ps = conn.prepareStatement(sql);
 			ps.setString(0, userName);
 			ps.setString(1, hash);
-			
+
 			rs = ps.executeQuery();
-			if(!rs.first())
+			if (!rs.first())
 				throw new Exception("Feil brukernavn/passord");
 			loggedIn = fromResultSet(rs).get(0);
-			
-			
-		} catch(Exception feil){
+
+		} catch (Exception feil) {
 			throw new AuthenticationException("Feil ved innlogging!", feil);
 		} finally {
 			DatabaseHelper.close(conn);
@@ -66,26 +64,25 @@ public class UserDAO
 		}
 		return loggedIn;
 	}
-	
+
 	public User GetBy(int id) throws AuthenticationException {
 		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		User user = null;
-		
-		try
-		{
+
+		try {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			conn.setAutoCommit(true);
-			
+
 			String sql = "SELECT * FROM `Users` WHERE `userID` = ?";
 			ps = conn.prepareStatement(sql);
 			ps.setInt(0, id);
-			
+
 			rs = ps.executeQuery();
-			
+
 			user = fromResultSet(rs).get(0);
-		} catch(Exception feil){
+		} catch (Exception feil) {
 			throw new AuthenticationException("Feil ved innlogging!", feil);
 		} finally {
 			DatabaseHelper.close(conn);
@@ -94,36 +91,61 @@ public class UserDAO
 		}
 		return user;
 	}
-	
-	private List<User> fromResultSet(ResultSet rs) throws SQLException{
+
+	public List<User> getUsers() {
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		List<User> users = null;
+
+		try {
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			conn.setAutoCommit(false);
+			String sqlStr = "Select * from Users";
+			ps = conn.prepareStatement(sqlStr);
+
+			rs = ps.executeQuery();
+
+			users = fromResultSet(rs);
+		} catch (Exception ex) {
+
+		} finally {
+			DatabaseHelper.close(conn);
+			DatabaseHelper.close(ps);
+			DatabaseHelper.close(rs);
+		}
+		return users;
+	}
+
+	private List<User> fromResultSet(ResultSet rs) throws SQLException {
 		List<User> users = new ArrayList<>();
-		//For å være sikker på at vi får med alle i resultatsettet
+		// For å være sikker på at vi får med alle i resultatsettet
 		rs.beforeFirst();
-		
-		while(rs.next()){
+
+		while (rs.next()) {
 			User user = new User();
-			
+
 			user.setUserId(rs.getInt("ID"));
 			user.setPassword(rs.getNString("passwordHash"));
 			user.setUserName(rs.getNString("userName"));
-			
+
 			PersonDAO persons = new PersonDAO();
 			user.setPersonalia(persons.getPerson(rs.getInt("personID")));
-			user.setEmergencyContact(persons.getPerson(rs.getInt("emergencyContactID")));
+			user.setEmergencyContact(persons.getPerson(rs
+					.getInt("emergencyContactID")));
 			user.setFriend(persons.getPerson(rs.getInt("friendID")));
-			
+
 			users.add(user);
 		}
 		return users;
 	}
-	
+
 	public boolean deletePerson(int id) {
 		Connection conn = null;
 		PreparedStatement ps = null;
 
 		boolean deleted = true;
-		try
-		{
+		try {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			conn.setAutoCommit(false);
 
@@ -140,14 +162,13 @@ public class UserDAO
 		}
 		return deleted;
 	}
-	
+
 	public int insertPerson(User user) {
 		int insertedId = -1;
 		Connection conn = null;
 		CallableStatement cs = null;
 
-		try
-		{
+		try {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			conn.setAutoCommit(false);
 
@@ -159,10 +180,10 @@ public class UserDAO
 			cs.setString(2, SHA256(user.getPassword()));
 
 			cs.registerOutParameter(0, Types.INTEGER);
-			
+
 			PersonDAO persons = new PersonDAO();
 			persons.savePerson(user.getPersonalia());
-			
+
 			cs.executeQuery();
 
 			insertedId = cs.getInt(0);

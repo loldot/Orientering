@@ -3,6 +3,7 @@ package no.orientering.controllers;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -59,8 +60,15 @@ public class UserController extends HttpServlet {
 
 			}
 		} else {
-			List<User> users = ud.
+			List<User> users = ud.getUsers();
+			URL ="WEB-INF/userlist.jsp";
+			request.setAttribute("users",users);
+			
+			
 		}
+		RequestDispatcher dispatcher = request.getRequestDispatcher(URL);
+		dispatcher.forward(request, response);
+		
 	}
 
 	/**
