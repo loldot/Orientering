@@ -34,7 +34,7 @@
 				<tr>
 					<td>Personalia</td>
 
-					<td><select id="ddlPersons" name="persons">
+					<td><select id="ddlPersons" name="personalia">
 							<option value="0">-Velg-</option>
 							<c:forEach var="person" items="${persons}">
 

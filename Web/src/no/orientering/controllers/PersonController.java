@@ -50,9 +50,7 @@ public class PersonController extends HttpServlet {
 
 					request.setAttribute("person", p);
 				}
-			} else {
-				URL = "WEB-INF/personview.jsp";
-			}
+			} 
 
 		} else {
 			List<Person> plist = pd.getPersons();
