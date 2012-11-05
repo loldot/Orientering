@@ -77,8 +77,8 @@ public class PersonDAO {
 			ps = conn.prepareStatement(sqlStr);
 
 			rs = ps.executeQuery();
-			if (!rs.first())
-				throw new Exception("Feil i getPerson");
+			/*if (!rs.first())
+				throw new Exception("Feil i getPerson");*/
 
 			Person p = null;
 			persons = new ArrayList<Person>();
@@ -90,11 +90,13 @@ public class PersonDAO {
 				p.setFirstName(rs.getString("FirstName"));
 				p.setLastName(rs.getString("LastName"));
 				p.setPhone(rs.getString("Phone"));
+				p.setAddress(rs.getString("Address"));
 				persons.add(p);
 			}
 
 		} catch (Exception feil) {
-
+			String f = feil.getMessage();
+			System.out.println(f);
 		}
 
 		return persons;
@@ -137,22 +139,22 @@ public class PersonDAO {
 	private boolean saveNewPerson(Person p) {
 
 		boolean saved = false;
-		String sqlStr = "Insert into `Persons` set "
+		String sqlStr = "Insert into `Persons` "
 				+ "(`FirstName`,`LastName`,`Phone`,`BirthYear`,`Address`) "
 				+ "Values (?,?,?,?,?)";
 
 		try {
 			PreparedStatement ps = conn.prepareStatement(sqlStr);
-			ps.setString(0, p.getFirstName());
-			ps.setString(1,p.getLastName());
-			ps.setString(2,p.getPhone());
-			ps.setInt(3, p.getBirthYear());
-			ps.setString(4,p.getAddress());
-			
-			
+			ps.setString(1, p.getFirstName());
+			ps.setString(2, p.getLastName());
+			ps.setString(3, p.getPhone());
+			ps.setInt(4, p.getBirthYear());
+			ps.setString(5, p.getAddress());
+
 			saved = sqlCmd.ExecuteNonQuery(ps) > 0;
 		} catch (Exception e) {
-
+			String f = e.getMessage();
+			System.out.println(f);
 		}
 
 		return saved;
@@ -168,18 +170,18 @@ public class PersonDAO {
 		try {
 			PreparedStatement ps = conn.prepareStatement(sqlStr);
 			ps.setString(0, p.getFirstName());
-			ps.setString(1,p.getLastName());
-			ps.setString(2,p.getPhone());
+			ps.setString(1, p.getLastName());
+			ps.setString(2, p.getPhone());
 			ps.setInt(3, p.getBirthYear());
-			ps.setString(4,p.getAddress());
-			ps.setInt(5,p.getID());
-			
+			ps.setString(4, p.getAddress());
+			ps.setInt(5, p.getID());
+
 			updated = sqlCmd.ExecuteNonQuery(ps) > 0;
-			
-		}catch (Exception ex){
-			
+
+		} catch (Exception ex) {
+
 		}
-		
+
 		return updated;
 	}
 }

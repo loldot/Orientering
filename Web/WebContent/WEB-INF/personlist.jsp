@@ -23,18 +23,29 @@
 			<tbody>
 				<c:forEach var="person" items="${persons}">
 					<tr>
-						<td>{person.firstName}</td>
-						<td>{person.lastName}</td>
-						<td>{person.phone}</td>
-						<td>{person.address}</td>
-						<td><a href="PersonController?personID={person.ID}">Endre</a></td>
+						<td>${person.firstName}</td>
+						<td>${person.lastName}</td>
+						<td>${person.phone}</td>
+						<td>${person.address}</td>
+						<td><a href="PersonController?personID=${person.ID}">Endre</a></td>
 						<td></td>
-						<td></td>
+						
 					</tr>
 				</c:forEach>
 
 			</tbody>
-			<tfoot></tfoot>
+			<tfoot>
+			<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td><a href="PersonController?personID=0">Ny person</a></td>
+						<td></td>
+						
+					</tr>
+			
+			</tfoot>
 		</table>
 	</div>
 

@@ -9,4 +9,4 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" href="../Styles/stylesheet.css" type="text/css" />
+<link rel="stylesheet" href="/SimpleCMS/Styles/stylesheet.css" type="text/css" />

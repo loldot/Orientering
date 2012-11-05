@@ -43,19 +43,22 @@ public class PersonController extends HttpServlet {
 		if (!NetHelp.isNullOrEmpty(id)) {
 			
 			int pID = Integer.parseInt(id);
+			URL = "WEB-INF/personview.jsp";
 			if (pID > 0){
 				Person p = pd.getPerson(Integer.parseInt(id));
 				if(p != null){
-					URL = "WEB-INF/personview.jsp";
+					
 					request.setAttribute("person", p);
 				}
+			}else {
+				URL ="WEB-INF/personview.jsp";
 			}
 			
 		}else
 		{
 			List<Person> plist = pd.getPersons();
 			URL ="WEB-INF/personlist.jsp";
-			request.setAttribute("Persons", plist);
+			request.setAttribute("persons", plist);
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(URL);
 		dispatcher.forward(request, response);
@@ -91,6 +94,7 @@ public class PersonController extends HttpServlet {
 			}
 			if (pd.savePerson(p)) {
 				// Gå til liste..
+				response.sendRedirect("PersonController");
 			}
 
 		} catch (Exception ex) {
