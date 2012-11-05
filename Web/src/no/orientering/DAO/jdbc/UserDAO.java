@@ -175,9 +175,9 @@ public class UserDAO {
 			String sqlStr = "{CALL InsertUser(?,?,?,?,?,?)}";
 
 			cs = conn.prepareCall(sqlStr);
-			cs.setInt(0, user.getUserId());
-			cs.setString(1, user.getUserName());
-			cs.setString(2, SHA256(user.getPassword()));
+			cs.setInt(1, user.getUserId());
+			cs.setString(2, user.getUserName());
+			cs.setString(3, SHA256(user.getPassword()));
 
 			cs.registerOutParameter(0, Types.INTEGER);
 
