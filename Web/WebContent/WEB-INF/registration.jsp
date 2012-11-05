@@ -3,7 +3,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="header.jsp" />
 <title>Registration</title>
+<script type="text/javascript">
+	function selectedIndexChange() {
 
+		var pList = document.getElementById("ddlPersons");
+		var ecList = document.getElementById("ddlEC");
+		var fList = document.getElementById("ddlFriends");
+		var pListItem = pList[pList.selectedIndex];
+
+		for ( var i = 0; i < pList.length; i++) {
+			if (pListItem.value == fList[i].value) {
+				fList[i].disabled = true;
+				ecList[i].disabled = true;
+			} else {
+				fList[i].disabled = false;
+				ecList[i].disabled = false;
+			}
+
+		}
+
+	}
+</script>
 
 </head>
 <body>
@@ -13,6 +33,7 @@
 			<table>
 				<tr>
 					<td>Personalia</td>
+
 					<td><select id="ddlPersons" name="persons">
 							<option value="0">-Velg-</option>
 							<c:forEach var="person" items="${persons}">
@@ -35,10 +56,8 @@
 					<td>Emergency contact</td>
 					<td><select id="ddlEC" name="ec">
 							<option value="0">-Velg-</option>
-							<c:forEach var="person" items="${persons}">		
-							
-							
-							
+							<c:forEach var="person" items="${persons}">
+
 								<option value="${person.ID}">${person.firstName}
 									${person.lastName}</option>
 							</c:forEach>
@@ -47,7 +66,6 @@
 				<tr>
 					<td>Friend</td>
 					<td><select id="ddlFriends" name="friend">
-							<option value="0">-Velg-</option>
 							<option value="0">-Velg-</option>
 							<c:forEach var="person" items="${persons}">
 								<option value="${person.ID}">${person.firstName}
@@ -68,7 +86,7 @@
 					<td><input type="password" name="rePassword" /></td>
 				</tr>
 				<tr>
-					<td></td>
+					<td><input type="hidden" name="userID" value="${user.ID}" /> </td>
 					<td><input type="submit" value="Lagre" /></td>
 				</tr>
 			</table>
