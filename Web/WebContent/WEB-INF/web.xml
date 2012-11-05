@@ -16,7 +16,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>JerseyTest</servlet-name>
-    <url-pattern>/jersey</url-pattern>
+    <url-pattern>/jersey/*</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>PersonController</servlet-name>
