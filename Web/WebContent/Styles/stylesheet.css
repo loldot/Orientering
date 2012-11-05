@@ -3,6 +3,13 @@
 		margin: 0;
 		padding: 0;
 	}
+	
+	#wrapper 
+	{
+		margin: 0 auto;
+		width: 1280px;
+	}
+	
 	h1 {
 		font-size: 20pt;
 		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
