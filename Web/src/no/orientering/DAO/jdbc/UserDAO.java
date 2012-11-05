@@ -75,9 +75,9 @@ public class UserDAO {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			conn.setAutoCommit(true);
 
-			String sql = "SELECT * FROM `Users` WHERE `userID` = ?";
+			String sql = "SELECT * FROM `Users` WHERE `ID` = ?";
 			ps = conn.prepareStatement(sql);
-			ps.setInt(0, id);
+			ps.setInt(1, id);
 
 			rs = ps.executeQuery();
 

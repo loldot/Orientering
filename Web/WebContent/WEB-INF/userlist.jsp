@@ -13,6 +13,7 @@
 		<table>
 			<thead>
 				<tr class="">
+					<td>Brukernavn</td>
 					<td>Fornavn</td>
 					<td>Etternavn</td>
 					<td>Tlf</td>
@@ -26,12 +27,14 @@
 			<tbody>
 				<c:forEach var="user" items="${users}">
 					<tr>
+						<td>${user.userName}</td>
 						<td>${user.personalia.firstName}</td>
 						<td>${user.personalia.lastName}</td>
 						<td>${user.personalia.phone}</td>
 						<td>${user.personalia.address}</td>
 						<td>${user.personalia.birthYear}</td>
-						<td>${user.emergencyContact.firstName} ${user.emergencyContact.lastName}</td>
+						<td>${user.emergencyContact.firstName}
+							${user.emergencyContact.lastName}</td>
 						<td><a href="UserController?userID=${user.userId}">Endre</a></td>
 						<td></td>
 
@@ -41,6 +44,7 @@
 			</tbody>
 			<tfoot>
 				<tr>
+					<td></td>
 					<td></td>
 					<td></td>
 					<td></td>

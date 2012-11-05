@@ -34,18 +34,19 @@
 				<tr>
 					<td>Personalia</td>
 
-					<td><select id="ddlPersons" name="personalia">
+					<td><select id="ddlPersons" name="personalia" onchange="selectedIndexChange()">
 							<option value="0">-Velg-</option>
 							<c:forEach var="person" items="${persons}">
 
+								
 								<c:choose>
-									<c:when test="${person.ID} == ${user.personalia.ID}">
+									<c:when test="${person.ID eq user.personalia.ID}">
 										<option value="${person.ID}" selected="selected">${person.firstName}
 											${person.lastName}</option>
 									</c:when>
 									<c:otherwise>
 										<option value="${person.ID}">${person.firstName}
-											${person.lastName}</option>
+											${person.lastName} </option>
 
 									</c:otherwise>
 								</c:choose>
@@ -75,7 +76,7 @@
 				</tr>
 				<tr>
 					<td>Brukernavn</td>
-					<td><input type="text" name="username" /></td>
+					<td><input type="text" name="username" value="${user.userName}"/></td>
 				</tr>
 				<tr>
 					<td>Passord</td>
@@ -86,7 +87,7 @@
 					<td><input type="password" name="rePassword" /></td>
 				</tr>
 				<tr>
-					<td><input type="hidden" name="userID" value="${user.ID}" /> </td>
+					<td><input type="hidden" name="userID" value="${user.userId}" /> </td>
 					<td><input type="submit" value="Lagre" /></td>
 				</tr>
 			</table>

@@ -16,11 +16,13 @@ public class PersonDAO {
 
 	private Connection conn;
 
-	private SqlCommands sqlCmd = new SqlCommands();
+	private SqlCommands sqlCmd;
 
 	public PersonDAO() {
 		try {
+
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			sqlCmd = new SqlCommands();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -60,7 +62,6 @@ public class PersonDAO {
 			System.out.println(f);
 		}
 
-		
 		return p;
 	}
 
