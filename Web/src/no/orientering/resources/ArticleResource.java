@@ -10,7 +10,9 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.*;
+import javax.ws.rs.core.Response.Status;
 
 import no.orientering.DAO.jdbc.ArticleDAO;
 import no.orientering.models.Article;
@@ -39,8 +41,13 @@ public class ArticleResource {
 	}
 	
 	@PUT
-	public final Response putArticle(@PathParam("id") final int id, final Article article){
-		if(db.getArticle(id) == null)
+	public final void putArticle(@PathParam("id") final int id, final Article article){
+		if(db.getArticle(id) == null){
+			throw new WebApplicationException(Status.FORBIDDEN);
+		}
+		
+		db.saveArticle(article);
 	}
+	
 
 }
