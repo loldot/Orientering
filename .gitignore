@@ -27,6 +27,7 @@
 *.sql
 *.sqlite
 context.xml
+*.classpath
 
 # OS generated files #
 ######################
