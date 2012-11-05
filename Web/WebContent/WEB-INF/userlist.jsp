@@ -32,7 +32,7 @@
 						<td>${user.personalia.address}</td>
 						<td>${user.personalia.birthYear}</td>
 						<td>${user.emergencyContact.firstName} ${user.emergencyContact.lastName}</td>
-						<td><a href="UserController?userID=${user.ID}">Endre</a></td>
+						<td><a href="UserController?userID=${user.userId}">Endre</a></td>
 						<td></td>
 
 					</tr>
@@ -46,6 +46,8 @@
 					<td></td>
 					<td></td>
 					<td><a href="UserController?userID=0">Ny person</a></td>
+					<td></td>
+					<td></td>
 					<td></td>
 
 				</tr>
