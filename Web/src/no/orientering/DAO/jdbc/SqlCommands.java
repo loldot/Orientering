@@ -7,17 +7,10 @@ import java.sql.SQLException;
 
 public class SqlCommands {
 
-	private Connection conn;
+	// private Connection conn;
 
 	public SqlCommands() {
 
-		try {
-			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-
-		}
 	}
 
 	/**
@@ -28,7 +21,9 @@ public class SqlCommands {
 	 */
 	public ResultSet makeResultSet(String sqlStr) {
 		ResultSet rs = null;
+		Connection conn = null;
 		try {
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			PreparedStatement ps = conn.prepareStatement(sqlStr);
 
 			rs = ps.executeQuery();
@@ -41,8 +36,9 @@ public class SqlCommands {
 
 	public ResultSet makeResultSet(PreparedStatement ps) {
 		ResultSet rs = null;
+		Connection conn = null;
 		try {
-
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			rs = ps.executeQuery();
 			conn.close();
 		} catch (Exception ex) {
@@ -59,8 +55,9 @@ public class SqlCommands {
 	 */
 	public int ExecuteNonQuery(String sqlStr) {
 		int rowsAff = 0;
+		Connection conn = null;
 		try {
-
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			PreparedStatement ps;
 
 			ps = conn.prepareStatement(sqlStr);
@@ -75,8 +72,9 @@ public class SqlCommands {
 
 	public int ExecuteNonQuery(PreparedStatement ps) {
 		int rowsAff = 0;
+		Connection conn = null;
 		try {
-
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			rowsAff = ps.executeUpdate();
 			conn.close();
 		} catch (Exception ex) {
