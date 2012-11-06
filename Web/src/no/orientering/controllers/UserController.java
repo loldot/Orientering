@@ -50,14 +50,12 @@ public class UserController extends HttpServlet {
 
 		if (!NetHelp.isNullOrEmpty(id)) {
 			int uid = Integer.parseInt(id);
-
+			URL = "WEB-INF/registration.jsp";
 			if (uid > 0) {
 				// edit
 				User u = ud.GetBy(uid);
 				if (u != null)
 					request.setAttribute("user", u);
-
-				URL = "WEB-INF/registration.jsp";
 
 			}
 		} else {
@@ -86,9 +84,9 @@ public class UserController extends HttpServlet {
 			int uid = Integer.parseInt(id);
 			if (uid > 0) {
 				// edit
-				u = editUser(uid,request);
-				if(u!=null){
-					
+				u = editUser(uid, request);
+				if (u != null) {
+
 				}
 			}
 		} else {

@@ -38,7 +38,7 @@
 <body>
 	<jsp:include page="top.jsp"></jsp:include>
 	<div id="content">
-		<form method="post" action="PersonController" onsubmit="return isValidForm()">
+		<form method="post" action="PersonController" onsubmit="return validate()">
 			<table>
 				<tr>
 
