@@ -18,12 +18,12 @@ public class PersonDAO {
 	private Connection oldConn;
 
 	private SqlCommands sqlCmd;
-	
 
 	public PersonDAO() {
 		try {
 
-			//oldConn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			// oldConn =
+			// DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			sqlCmd = new SqlCommands();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -61,7 +61,7 @@ public class PersonDAO {
 		} catch (Exception feil) {
 			String f = feil.getMessage();
 			System.out.println(f);
-		}finally{
+		} finally {
 			DatabaseHelper.close(rs);
 			DatabaseHelper.close(ps);
 			DatabaseHelper.close(conn);
@@ -106,7 +106,7 @@ public class PersonDAO {
 
 			conn.close();
 		} catch (Exception feil) {
-		}finally{
+		} finally {
 			DatabaseHelper.close(rs);
 			DatabaseHelper.close(ps);
 			DatabaseHelper.close(conn);
@@ -117,11 +117,14 @@ public class PersonDAO {
 	}
 
 	public boolean deletePerson(int id) {
+		Connection conn = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		boolean deleted = true;
 		try {
-			oldConn.setAutoCommit(false);
+
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			conn.setAutoCommit(true);
 
 			String sqlStr = "Delete from `Person` where ID = ?";
 
@@ -135,6 +138,10 @@ public class PersonDAO {
 
 		} catch (Exception ex) {
 
+		} finally {
+			DatabaseHelper.close(rs);
+			DatabaseHelper.close(ps);
+			DatabaseHelper.close(conn);
 		}
 		return deleted;
 	}
@@ -151,13 +158,18 @@ public class PersonDAO {
 
 	private boolean saveNewPerson(Person p) {
 
+		Connection conn = null;
+		PreparedStatement ps = null;
+	
 		boolean saved = false;
 		String sqlStr = "Insert into `Persons` "
 				+ "(`FirstName`,`LastName`,`Phone`,`BirthYear`,`Address`) "
 				+ "Values (?,?,?,?,?)";
 
 		try {
-			PreparedStatement ps = oldConn.prepareStatement(sqlStr);
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			conn.setAutoCommit(true);
+			 ps = conn.prepareStatement(sqlStr);
 			ps.setString(1, p.getFirstName());
 			ps.setString(2, p.getLastName());
 			ps.setString(3, p.getPhone());
@@ -168,20 +180,27 @@ public class PersonDAO {
 		} catch (Exception e) {
 			String f = e.getMessage();
 			System.out.println(f);
+		} finally {
+			
+			DatabaseHelper.close(ps);
+			DatabaseHelper.close(conn);
 		}
 
 		return saved;
 	}
 
 	private boolean updatePerson(Person p) {
-
+		Connection conn = null;
+		PreparedStatement ps = null;
 		boolean updated = false;
 		String sqlStr = "Update `Persons`set " + "FirstName = ?,"
 				+ "LastName = ?," + "Phone = ?," + "BirthYear = ?,"
 				+ "Address = ?" + " WHERE `ID`= ?";
 
 		try {
-			PreparedStatement ps = oldConn.prepareStatement(sqlStr);
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			conn.setAutoCommit(true);
+			 ps = conn.prepareStatement(sqlStr);
 			ps.setString(1, p.getFirstName());
 			ps.setString(2, p.getLastName());
 			ps.setString(3, p.getPhone());
@@ -193,6 +212,10 @@ public class PersonDAO {
 
 		} catch (Exception ex) {
 
+		} finally {
+		
+			DatabaseHelper.close(ps);
+			DatabaseHelper.close(conn);
 		}
 
 		return updated;
