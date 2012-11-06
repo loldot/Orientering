@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
@@ -166,36 +167,46 @@ public class UserDAO {
 	public int insertPerson(User user) {
 		int insertedId = -1;
 		Connection conn = null;
-		CallableStatement cs = null;
-
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		SqlCommands sqlCmd = new SqlCommands();
 		try {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			conn.setAutoCommit(true);
 
-			string sqlStr="Insert into Users (username, passwordHash"
-			String sqlStr = "{CALL InsertUser(?,?,?,?,?,?)}";
+			String sqlStr = "Insert into Users ("
+					+ "userName,passwordHash,personID,emergencyContactID,friendID)"
+					+ " values (?,?,?,?,?)";
 
-			cs = conn.prepareCall(sqlStr);
-			cs.setInt(1, user.getUserId());
-			cs.setString(2, user.getUserName());
-			cs.setString(3, SHA256(user.getPassword()));
-
-			cs.registerOutParameter(4, Types.INTEGER);
-
-			PersonDAO persons = new PersonDAO();
-			persons.savePerson(user.getPersonalia());
-
-			cs.executeQuery();
-
-			insertedId = cs.getInt(4);
+			// String sqlStr = "{CALL InsertUser(?,?,?,?,?,?)}";
+			ps = conn.prepareStatement(sqlStr,Statement.RETURN_GENERATED_KEYS);
+			ps.setInt(1, user.getUserId());
+			ps.setString(2, user.getUserName());
+			ps.setString(3, SHA256(user.getPassword()));
+			
+			PersonDAO pd = new PersonDAO();
+			int personID = pd.savePerson(user.getPersonalia());
+			if (personID <= 0){
+				throw new Exception("Feil v/lagring person");
+			}
+			ps.setInt(4, personID);
+			ps.setInt(5,user.getEmergencyContact().getID());
+			ps.setInt(6, user.getFriend().getID());
+			
+			sqlCmd.ExecuteNonQuery(ps);
+			rs = ps.getGeneratedKeys();
+			if(rs.next())
+				insertedId= rs.getInt(1);
+			
+	
 		} catch (Exception ex) {
 			String f = ex.getMessage();
 			System.out.println(f);
 		} finally {
 			DatabaseHelper.close(conn);
-			DatabaseHelper.close(cs);
+			DatabaseHelper.close(ps);
+			DatabaseHelper.close(rs);
 		}
 		return insertedId;
 	}
-
 }

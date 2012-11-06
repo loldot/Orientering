@@ -50,7 +50,7 @@ public class PersonController extends HttpServlet {
 
 					request.setAttribute("person", p);
 				}
-			} 
+			}
 
 		} else {
 			List<Person> plist = pd.getPersons();
@@ -91,7 +91,7 @@ public class PersonController extends HttpServlet {
 			if (!validatePerson(p)) {
 				throw new Exception("Fyll inn alt");
 			}
-			if (pd.savePerson(p)) {
+			if (pd.savePerson(p) > 0) {
 				// Gå til liste..
 				response.sendRedirect("PersonController");
 			}

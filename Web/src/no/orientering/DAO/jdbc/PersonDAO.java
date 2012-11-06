@@ -5,6 +5,7 @@ import java.sql.ParameterMetaData;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,8 +147,8 @@ public class PersonDAO {
 		return deleted;
 	}
 
-	public boolean savePerson(Person p) {
-		boolean saved = false;
+	public int savePerson(Person p) {
+		int saved = -1;
 		if (p.getID() > 0) {
 			saved = updatePerson(p);
 		} else
@@ -156,12 +157,12 @@ public class PersonDAO {
 		return saved;
 	}
 
-	private boolean saveNewPerson(Person p) {
+	private int saveNewPerson(Person p) {
 
 		Connection conn = null;
 		PreparedStatement ps = null;
-	
-		boolean saved = false;
+		ResultSet rs = null;
+		int saved = -1;
 		String sqlStr = "Insert into `Persons` "
 				+ "(`FirstName`,`LastName`,`Phone`,`BirthYear`,`Address`) "
 				+ "Values (?,?,?,?,?)";
@@ -169,14 +170,18 @@ public class PersonDAO {
 		try {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			conn.setAutoCommit(true);
-			 ps = conn.prepareStatement(sqlStr);
+			 ps = conn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, p.getFirstName());
 			ps.setString(2, p.getLastName());
 			ps.setString(3, p.getPhone());
 			ps.setInt(4, p.getBirthYear());
 			ps.setString(5, p.getAddress());
 
-			saved = sqlCmd.ExecuteNonQuery(ps) > 0;
+			sqlCmd.ExecuteNonQuery(ps);
+			rs = ps.getGeneratedKeys();
+			if(rs.next())
+				saved= rs.getInt(1);
+			
 		} catch (Exception e) {
 			String f = e.getMessage();
 			System.out.println(f);
@@ -189,10 +194,10 @@ public class PersonDAO {
 		return saved;
 	}
 
-	private boolean updatePerson(Person p) {
+	private int updatePerson(Person p) {
 		Connection conn = null;
 		PreparedStatement ps = null;
-		boolean updated = false;
+		int updated = -1;
 		String sqlStr = "Update `Persons`set " + "FirstName = ?,"
 				+ "LastName = ?," + "Phone = ?," + "BirthYear = ?,"
 				+ "Address = ?" + " WHERE `ID`= ?";
@@ -208,7 +213,7 @@ public class PersonDAO {
 			ps.setString(5, p.getAddress());
 			ps.setInt(6, p.getID());
 
-			updated = sqlCmd.ExecuteNonQuery(ps) > 0;
+			updated = sqlCmd.ExecuteNonQuery(ps);
 
 		} catch (Exception ex) {
 
