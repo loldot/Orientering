@@ -14,12 +14,19 @@
 		var ctrls = new Array(fname, lname, phone, birth, addr);
 		var valid = true;
 
+		
+		
 		for ( var i = 0; i < ctrls.length; i++) {
-			if (isBlank(ctrls[i].value)) 
+			if (isBlank(ctrls[i].value)){
 				valid = false;
-			
+				ctrls[i].style.borderColor = "#FF0000";
+			}else {
+				ctrls[i].style.borderColor = null;
+			}
 
 		}
+		
+		return valid;
 
 	}
 	function isBlank(str) {
@@ -31,7 +38,7 @@
 <body>
 	<jsp:include page="top.jsp"></jsp:include>
 	<div id="content">
-		<form method="post" action="PersonController">
+		<form method="post" action="PersonController" onsubmit="return isValidForm()">
 			<table>
 				<tr>
 
@@ -61,7 +68,7 @@
 				</tr>
 				<tr>
 					<td><input type="hidden" name="personID" value="${person.ID}" /></td>
-					<td><input type="submit" value="Lagre" }"/></td>
+					<td><input onclick="return validate();" type="submit" value="Lagre"/></td>
 				</tr>
 			</table>
 		</form>
