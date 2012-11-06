@@ -86,19 +86,70 @@ public class UserController extends HttpServlet {
 			int uid = Integer.parseInt(id);
 			if (uid > 0) {
 				// edit
+				u = editUser(uid,request);
+				if(u!=null){
+					
+				}
 			}
 		} else {
 			// ny kis
 			u = makeUser(request);
 			if (u != null) {
-				if(ud.insertPerson(u) > -1){
-					//success
+				if (ud.insertPerson(u) > -1) {
+					// success
 				}
-					
+
 			}
 
 		}
 
+	}
+
+	private User editUser(int uid, HttpServletRequest request) {
+		Person personalia = null;
+		User u = new User();
+		Person friend = null;
+		Person ec = null;
+		PersonDAO pd = new PersonDAO();
+
+		try {
+
+			if (!NetHelp.isNullOrEmpty(request.getParameter("personalia")))
+				personalia = pd.getPerson(Integer.parseInt(request
+						.getParameter("personalia")));
+			if (personalia == null)
+				throw new Exception("Feil ved lagring");
+
+			String ecID = request.getParameter("ec");
+			String fID = request.getParameter("friend");
+
+			u.setUserId(uid);
+
+			if (!NetHelp.isNullOrEmpty(ecID))
+				ec = pd.getPerson(Integer.parseInt(ecID));
+
+			if (!NetHelp.isNullOrEmpty(fID))
+				friend = pd.getPerson(Integer.parseInt(fID));
+
+			u.setPersonalia(personalia);
+
+			if (ec != null) {
+				u.setEmergencyContact(ec);
+			} else {
+				u.setEmergencyContact(new NullPerson());
+			}
+
+			if (friend != null) {
+				u.setFriend(friend);
+			} else {
+				u.setFriend(new NullPerson());
+			}
+
+		} catch (Exception ex) {
+
+		}
+
+		return u;
 	}
 
 	private User makeUser(HttpServletRequest request) {
@@ -146,12 +197,6 @@ public class UserController extends HttpServlet {
 		}
 
 		return u;
-	}
-
-	private User editUser(int uid, HttpServletRequest request) {
-
-		return null;
-
 	}
 
 }
