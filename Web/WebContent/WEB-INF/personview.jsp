@@ -3,6 +3,29 @@
 <jsp:include page="header.jsp" />
 <title>Persons</title>
 
+<script type="text/javascript">
+	function validate() {
+		var fname = document.getElementById("txtfn");
+		var lname = document.getElementById("txtln");
+		var phone = document.getElementById("txtphone");
+		var birth = document.getElementById("txtbirth");
+		var addr = document.getElementById("txtaddr");
+
+		var ctrls = new Array(fname, lname, phone, birth, addr);
+		var valid = true;
+
+		for ( var i = 0; i < ctrls.length; i++) {
+			if (isBlank(ctrls[i].value)) 
+				valid = false;
+			
+
+		}
+
+	}
+	function isBlank(str) {
+		return (!str || /^\s*$/.test(str));
+	}
+</script>
 
 </head>
 <body>
@@ -13,27 +36,32 @@
 				<tr>
 
 					<td>Fornavn</td>
-					<td><input type="text" name="firstName" value="${person.firstName}" /></td>
+					<td><input id="txtfn" type="text" name="firstName"
+						value="${person.firstName}" /></td>
 				</tr>
 				<tr>
 					<td>Etternavn</td>
-					<td><input type="text" name="lastName" value="${person.lastName}"/></td>
+					<td><input id="txtln" type="text" name="lastName"
+						value="${person.lastName}" /></td>
 				</tr>
 				<tr>
 					<td>Tlf. nr.:</td>
-					<td><input type="text" name="phone" value="${person.phone}"/></td>
+					<td><input id="txtphone" type="text" name="phone"
+						value="${person.phone}" /></td>
 				</tr>
 				<tr>
 					<td>Fødselsår</td>
-					<td><input type="number" name="birthYear" value="${person.birthYear}"/></td>
+					<td><input id="txtbirth" type="number" name="birthYear"
+						value="${person.birthYear}" /></td>
 				</tr>
 				<tr>
 					<td>Adresse</td>
-					<td><input type="text" name="address" value="${person.address}"/></td>
+					<td><input id="txtaddr" type="text" name="address"
+						value="${person.address}" /></td>
 				</tr>
 				<tr>
-					<td><input type="hidden" name="personID" value="${person.ID}"/></td>
-					<td><input type="submit" value="Lagre"}"/></td>
+					<td><input type="hidden" name="personID" value="${person.ID}" /></td>
+					<td><input type="submit" value="Lagre" }"/></td>
 				</tr>
 			</table>
 		</form>
