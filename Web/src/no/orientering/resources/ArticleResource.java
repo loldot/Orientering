@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Response.Status;
 
 import no.orientering.DAO.jdbc.ArticleDAO;
 import no.orientering.models.Article;
+import no.orientering.utils.AuthHelper;
 
 @Path("/articles")
 @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
@@ -35,14 +37,21 @@ public class ArticleResource {
 	}
 	
 	@POST
-	public final Response makeArticle(final Article article){
-		final int id = db.saveArticle(article);
+	public final Response makeArticle(@HeaderParam("Authorization") final String authHeader, final Article article){
+		if(!AuthHelper.isAuthorized(authHeader)){
+			throw new WebApplicationException(Status.UNAUTHORIZED);
+		}
+		
+		final int id = db.saveNew(article);
 		return Response.created(URI.create("/" + id)).build();
 	}
 	
 	@PUT
 	@Path("{id}")
-	public final void putArticle(@PathParam("id") final int id, final Article article){
+	public final void putArticle(@HeaderParam("Authorization") final String authHeader, @PathParam("id") final int id, final Article article){
+		if(!AuthHelper.isAuthorized(authHeader)){
+			throw new WebApplicationException(Status.UNAUTHORIZED);
+		}
 		if(db.getArticle(id) == null){
 			throw new WebApplicationException(Status.FORBIDDEN);
 		}
