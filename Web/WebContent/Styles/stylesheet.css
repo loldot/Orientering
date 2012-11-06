@@ -17,8 +17,8 @@
 		background-color: #A5BD4C;
 		background-image: url('images/page_t.jpg');
 		background-repeat: repeat;
-		background-attachment: scroll;
-		background-position: center center;
+		/*background-attachment: scroll;
+		background-position: center center;*/
 	}
 	h1,h2,h3,h4,h5,h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a
 h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover
@@ -159,10 +159,10 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.p
 		/*padding-bottom: 100px;*/
 	}
 	.nav {
-	margin-top: 10px;
-		position: relative;
+		margin-top: 10px; position : relative;
 		height: 39px;
 		z-index: 100;
+		position: relative;
 	}
 	.menu-extra1 {
 		position: relative;
@@ -218,7 +218,6 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.p
 		text-decoration: none;
 		margin-left: 4px;
 		margin-right: 4px;
-		
 	}
 	.menu ul li {
 		list-style-type: none;
@@ -434,7 +433,7 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.p
 			100%); /* IE10+ */
 		background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d
 			100%); /* W3C */
-		filter: progid:DXImageTransform.Microsoft.gradient(               startColorstr='#bfd255',
+		filter: progid:DXImageTransform.Microsoft.gradient(                startColorstr='#bfd255',
 			endColorstr='#9ecb2d', GradientType=0 ); /* IE6-9 */
 		color: #efefef;
 		border-bottom: 1px #003300 solid;
@@ -474,7 +473,9 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.p
 		padding-top: 20px;
 	}
 	.article {
-		border: 1px solid #E7E7E7;
+		font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+			"Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+		border: 2px solid #E7E7E7;
 		border-left-color: #D3D3D3;
 		border-right-color: #D3D3D3;
 		border-top-left-radius: 5px;
@@ -485,12 +486,14 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.p
 		margin: 10px;
 	}
 	.article_head {
-		
+		background-color: #EEEFE6;
+		color: #3F412A;
 	}
 	.article_title {
-		
+		color: #1A1E0B;
 	}
 	.article_content {
-		
+		color: #181910;
+		margin: 10px;
 	}
 }

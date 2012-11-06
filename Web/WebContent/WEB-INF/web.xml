@@ -54,4 +54,13 @@
     <servlet-name>ArticleController</servlet-name>
     <url-pattern>/ArticleController</url-pattern>
   </servlet-mapping>
+   <servlet>
+    <servlet-name>HomeController</servlet-name>
+    <servlet-class>no.orientering.controllers.HomeController</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeController</servlet-name>
+    <url-pattern>/HomeController</url-pattern>
+  </servlet-mapping>
 </web-app>
