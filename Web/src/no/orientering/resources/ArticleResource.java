@@ -41,6 +41,7 @@ public class ArticleResource {
 	}
 	
 	@PUT
+	@Path("{id}")
 	public final void putArticle(@PathParam("id") final int id, final Article article){
 		if(db.getArticle(id) == null){
 			throw new WebApplicationException(Status.FORBIDDEN);

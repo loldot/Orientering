@@ -32,6 +32,15 @@
     <servlet-class>no.orientering.controllers.UserController</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <servlet>
+      <servlet-name>RSS</servlet-name>
+      <servlet-class>no.orientering.controllers.RSS</servlet-class>
+      <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RSS</servlet-name>
+    <url-pattern>/RSS</url-pattern>
+  </servlet-mapping>
   <servlet-mapping>
     <servlet-name>UserController</servlet-name>
     <url-pattern>/UserController</url-pattern>

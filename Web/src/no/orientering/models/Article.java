@@ -1,5 +1,6 @@
 package no.orientering.models;
 
+import java.net.URI;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -7,6 +8,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import com.sun.syndication.feed.synd.SyndContent;
+import com.sun.syndication.feed.synd.SyndContentImpl;
+import com.sun.syndication.feed.synd.SyndEntry;
+import com.sun.syndication.feed.synd.SyndEntryImpl;
 
 
 @XmlRootElement(name = "article")
@@ -53,5 +59,24 @@ public class Article {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public SyndEntry asRSSEntry(){
+		String permUrl = URI.create(String.format("/articles/%d", ID)).toString();
+		SyndEntry entry = new SyndEntryImpl();
+		
+		entry.setTitle(title);
+		entry.setAuthor(author.getUserName());
+		entry.setUri(permUrl);
+		entry.setLink(permUrl);
+		entry.setPublishedDate(publishedDate);
+		
+		SyndContent rssContent = new SyndContentImpl();
+		rssContent.setType("text/html");
+		rssContent.setValue(content.substring(0, 100));
+		
+		entry.setDescription(rssContent);
+		
+		return entry;
 	}
 }
