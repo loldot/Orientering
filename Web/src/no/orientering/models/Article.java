@@ -73,7 +73,7 @@ public class Article {
 		
 		SyndContent rssContent = new SyndContentImpl();
 		rssContent.setType("text/html");
-		rssContent.setValue(content.substring(0, 100));
+		rssContent.setValue((content.length() <= 100) ? content + "..." : content.substring(0, 100));
 		
 		entry.setDescription(rssContent);
 		
