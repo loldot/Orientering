@@ -32,7 +32,7 @@
 		var repwd = document.getElementById("txtpwd2");
 		
 		var ex = new Array();
-		var valid = false;
+		var valid = true;
 		
 		if (isBlank(txtuser.value)){
 			ex[0] = "*Brukernavn påkrevd";

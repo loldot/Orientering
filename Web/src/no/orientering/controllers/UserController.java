@@ -164,6 +164,7 @@ public class UserController extends HttpServlet {
 			if (personalia == null)
 				throw new Exception("Feil ved lagring");
 
+			u = new User();
 			String ecID = request.getParameter("ec");
 			String fID = request.getParameter("friend");
 
@@ -186,7 +187,7 @@ public class UserController extends HttpServlet {
 				u.setFriend(new NullPerson());
 			}
 
-			u.setUserName(request.getParameter("userName"));
+			u.setUserName(request.getParameter("username"));
 			u.setPassword(request.getParameter("password"));
 
 		} catch (Exception e) {

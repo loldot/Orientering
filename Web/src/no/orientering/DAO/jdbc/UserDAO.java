@@ -172,6 +172,7 @@ public class UserDAO {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			conn.setAutoCommit(true);
 
+			string sqlStr="Insert into Users (username, passwordHash"
 			String sqlStr = "{CALL InsertUser(?,?,?,?,?,?)}";
 
 			cs = conn.prepareCall(sqlStr);
@@ -179,15 +180,17 @@ public class UserDAO {
 			cs.setString(2, user.getUserName());
 			cs.setString(3, SHA256(user.getPassword()));
 
-			cs.registerOutParameter(0, Types.INTEGER);
+			cs.registerOutParameter(4, Types.INTEGER);
 
 			PersonDAO persons = new PersonDAO();
 			persons.savePerson(user.getPersonalia());
 
 			cs.executeQuery();
 
-			insertedId = cs.getInt(0);
+			insertedId = cs.getInt(4);
 		} catch (Exception ex) {
+			String f = ex.getMessage();
+			System.out.println(f);
 		} finally {
 			DatabaseHelper.close(conn);
 			DatabaseHelper.close(cs);
