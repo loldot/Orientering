@@ -29,6 +29,7 @@
 context.xml
 *.classpath
 .classpath
++.classpath
 .project
 .settings
 
