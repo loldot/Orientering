@@ -24,32 +24,49 @@
 
 	}
 	function validate() {
-		
-		
-		var pList = document.getElementById("ddlPersons");
+		var fname = document.getElementById("txtfn");
+		var lname = document.getElementById("txtln");
+		var phone = document.getElementById("txtphone");
+		var birth = document.getElementById("txtbirth");
+		var addr = document.getElementById("txtaddr");
+		//var pList = document.getElementById("ddlPersons");
 		var txtuser = document.getElementById("txtuser");
 		var pwd = document.getElementById("pwd");
 		var repwd = document.getElementById("txtpwd2");
-		
+
 		var ex = new Array();
 		var valid = true;
 		
-		if (isBlank(txtuser.value)){
-			ex[0] = "*Brukernavn påkrevd";
+		if (isBlank(fname.value)) {
+			ex[0] = "*Fornavn påkrevd";
+			valid = false;
+		}
+		if (isBlank(lname.value)) {
+			ex[(ex.length)] = "*Etternavn påkrevd";
+			valid = false;
+		}
+		if (isBlank(phone.value)) {
+			ex[(ex.length)] = "*Telefonnummer påkrevd";
+			valid = false;
+		}if (isBlank(birth.value)) {
+			ex[(ex.length)] = "*Fødselsår påkrevd";
+			valid = false;
+		}
+		if (isBlank(addr.value)) {
+			ex[(ex.length)] = "*Adresse påkrevd";
+			valid = false;
+		}
+		if (isBlank(txtuser.value)) {
+			ex[(ex.length)] = "*Brukernavn påkrevd";
 			valid = false;
 		}
 		
-		if(pList[pList.selectedIndex].value == "0"){
-			ex[(ex.length)] = "*Personalia må velges";
-			valid = false;
-		}
-		
-		if(pwd.value != repwd.value){
+		if (pwd.value != repwd.value) {
 			ex[(ex.length)] = "*Passordene må være like";
 			valid = false;
 		}
-		
-		if(!valid){
+
+		if (!valid) {
 			alert("Vennligst korriger følgende mangler: \n" + ex.join("\n"));
 		}
 		return valid;
@@ -63,32 +80,34 @@
 <body>
 	<jsp:include page="top.jsp"></jsp:include>
 	<div id="content">
-		<form method="post" action="UserController"
-			>
+		<form method="post" action="UserController">
 			<table>
-				<tr>
-					<td>Personalia</td>
-
-					<td><select id="ddlPersons" name="personalia"
-						onchange="selectedIndexChange()">
-							<option value="0">-Velg-</option>
-							<c:forEach var="person" items="${persons}">
-
-
-								<c:choose>
-									<c:when test="${person.ID eq user.personalia.ID}">
-										<option value="${person.ID}" selected="selected">${person.firstName}
-											${person.lastName}</option>
-									</c:when>
-									<c:otherwise>
-										<option value="${person.ID}">${person.firstName}
-											${person.lastName}</option>
-
-									</c:otherwise>
-								</c:choose>
-							</c:forEach>
-					</select></td>
+			<tr>
+				<td>Fornavn</td>
+				<td><input id="txtfn" type="text" name="firstName"
+					value="${user.personalia.firstName}" /></td>
 				</tr>
+				<tr>
+					<td>Etternavn</td>
+					<td><input id="txtln" type="text" name="lastName"
+						value="${user.personalia.lastName}" /></td>
+				</tr>
+				<tr>
+					<td>Tlf. nr.:</td>
+					<td><input id="txtphone" type="text" name="phone"
+						value="${user.personalia.phone}" /></td>
+				</tr>
+				<tr>
+					<td>Fødselsår</td>
+					<td><input id="txtbirth" type="number" name="birthYear"
+						value="${user.personalia.birthYear}" /></td>
+				</tr>
+				<tr>
+					<td>Adresse</td>
+					<td><input id="txtaddr" type="text" name="address"
+						value="${user.personalia.address}" /></td>
+				</tr>
+				
 				<tr>
 					<td>Emergency contact</td>
 					<td><select id="ddlEC" name="ec">
@@ -127,7 +146,7 @@
 					<td><input type="hidden" name="userID" value="${user.userId}" />
 					</td>
 					<td><input type="submit" value="Lagre"
-						 onclick="return validate()"/></td>
+						onclick="return validate()" /></td>
 				</tr>
 			</table>
 		</form>
