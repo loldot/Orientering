@@ -68,26 +68,35 @@ public class ArticleDAO {
 
 	public Article getArticle(int ID) {
 		Article art = null;
+		
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
 
 		String sqlStr = "Select * from articles where ID = ?";
 		try {
-			PreparedStatement ps = oldConn.prepareStatement(sqlStr);
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			conn.setAutoCommit(true);
+			ps = conn.prepareStatement(sqlStr);
 			ps.setInt(1, ID);
-			ResultSet rs = sqlCmd.makeResultSet(ps);
-			if (!rs.next())
+			rs = ps.executeQuery();
+			if (!rs.first())
 				throw new SQLException("No match");
 
 			UserDAO users = new UserDAO();			
 			art = new Article();
 			art.setID(rs.getInt("ID"));
 			art.setContent(rs.getString("Content"));
-			art.setPublishedDate(rs.getDate("PublishedDate"));
-			art.setTitle(rs.getString("Title"));
+			art.setPublishedDate(rs.getDate("publishDate"));
+			art.setTitle(rs.getString("title"));
 			art.setAuthor(users.GetBy(rs.getInt("authorId")));
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			DatabaseHelper.close(ps);
+			DatabaseHelper.close(rs);
+			DatabaseHelper.close(conn);
 		}
 
 		return art;
