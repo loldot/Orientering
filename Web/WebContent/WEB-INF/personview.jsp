@@ -68,7 +68,7 @@
 				</tr>
 				<tr>
 					<td><input type="hidden" name="personID" value="${person.ID}" /></td>
-					<td><input onclick="return validate();" type="submit" value="Lagre"/></td>
+					<td><input onclick="return validate()" type="submit" value="Lagre"/></td>
 				</tr>
 			</table>
 		</form>
