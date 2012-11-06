@@ -158,15 +158,17 @@ public class UserController extends HttpServlet {
 
 		PersonDAO pd = new PersonDAO();
 		try {
-			if (!NetHelp.isNullOrEmpty(request.getParameter("personalia")))
-				personalia = pd.getPerson(Integer.parseInt(request
-						.getParameter("personalia")));
-			if (personalia == null)
-				throw new Exception("Feil ved lagring");
-
+			
 			u = new User();
 			String ecID = request.getParameter("ec");
 			String fID = request.getParameter("friend");
+			
+			personalia = new Person();
+			personalia.setFirstName(request.getParameter("firstName"));
+			personalia.setLastName(request.getParameter("lastName"));
+			personalia.setBirthYear(Integer.parseInt(request.getParameter("birthYear")));
+			personalia.setPhone(request.getParameter("phone"));
+			personalia.setAddress(request.getParameter("address"));
 
 			if (!NetHelp.isNullOrEmpty(ecID))
 				ec = pd.getPerson(Integer.parseInt(ecID));

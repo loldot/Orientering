@@ -180,18 +180,18 @@ public class UserDAO {
 
 			// String sqlStr = "{CALL InsertUser(?,?,?,?,?,?)}";
 			ps = conn.prepareStatement(sqlStr,Statement.RETURN_GENERATED_KEYS);
-			ps.setInt(1, user.getUserId());
-			ps.setString(2, user.getUserName());
-			ps.setString(3, SHA256(user.getPassword()));
+			//ps.setInt(1, user.getUserId());
+			ps.setString(1, user.getUserName());
+			ps.setString(2, SHA256(user.getPassword()));
 			
 			PersonDAO pd = new PersonDAO();
 			int personID = pd.savePerson(user.getPersonalia());
 			if (personID <= 0){
 				throw new Exception("Feil v/lagring person");
 			}
-			ps.setInt(4, personID);
-			ps.setInt(5,user.getEmergencyContact().getID());
-			ps.setInt(6, user.getFriend().getID());
+			ps.setInt(3, personID);
+			ps.setInt(4,user.getEmergencyContact().getID());
+			ps.setInt(5, user.getFriend().getID());
 			
 			sqlCmd.ExecuteNonQuery(ps);
 			rs = ps.getGeneratedKeys();

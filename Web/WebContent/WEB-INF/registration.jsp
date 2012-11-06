@@ -82,6 +82,12 @@
 	<div id="content">
 		<form method="post" action="UserController">
 			<table>
+			<thead>
+			<tr>
+			<td colspan="2">Brukerregistrering</td>
+			
+			</tr>
+			</thead>
 			<tr>
 				<td>Fornavn</td>
 				<td><input id="txtfn" type="text" name="firstName"
@@ -142,12 +148,14 @@
 					<td>Verifiser passord</td>
 					<td><input id="txtpwd2" type="password" name="rePassword" /></td>
 				</tr>
+				<tfoot>
 				<tr>
 					<td><input type="hidden" name="userID" value="${user.userId}" />
 					</td>
 					<td><input type="submit" value="Lagre"
 						onclick="return validate()" /></td>
 				</tr>
+				</tfoot>
 			</table>
 		</form>
 	</div>
