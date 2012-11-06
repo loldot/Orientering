@@ -7,7 +7,7 @@
 		padding: 0;
 		color: #181910;
 		background-color: #A5BD4C;
-		background-image: url('../images/page_t.jpg');
+		background-image: url('images/page_t.jpg');
 		background-repeat: repeat;
 		background-attachment: scroll;
 		background-position: center center;
@@ -78,11 +78,21 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 		margin: 0;
 	}
 	#wrapper {
+
 		margin: 0 auto;
-		width: 900px;
+		margin-top: 40px;
+		width: 898px;
+		background-color: #FFF;
+		border-width: 1px;
+		border: 1px solid #B5B893; border-top-left-radius : 25px;
+		border-top-right-radius: 25px;
+		border-bottom-left-radius: 25px;
+		border-bottom-right-radius: 25px;
+		border-top-left-radius: 25px;
 	}
 	#content {
 		padding-top: 10px;
+		/*
 		border: 1px solid #E7E7E7;
 		border-left-color: #D3D3D3;
 		border-right-color: #D3D3D3;
@@ -90,6 +100,7 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 		border-top-right-radius: 5px;
 		border-bottom-left-radius: 5px;
 		border-bottom-right-radius: 5px;
+		*/
 		padding: 10px;
 		margin: 10px;
 	}
@@ -97,12 +108,17 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 		margin: 0 auto;
 		width: 898px;
 		height: 200px;
-		background-image: url('../images/header.jpg');
+		background-image: url('images/header.jpg');
 		background-repeat: no-repeat;
 		background-position: center center;
 	}
 	#top {
+		
 		width: 100%;
+		height:39px;
+	}
+	#navigation {
+		
 	}
 	table {
 		padding: 0;
@@ -132,7 +148,7 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 			100%); /* IE10+ */
 		background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d
 			100%); /* W3C */
-		filter: progid:DXImageTransform.Microsoft.gradient(        startColorstr='#bfd255',
+		filter: progid:DXImageTransform.Microsoft.gradient(         startColorstr='#bfd255',
 			endColorstr='#9ecb2d', GradientType=0 ); /* IE6-9 */
 		color: #efefef;
 		border-bottom: 1px #003300 solid;
