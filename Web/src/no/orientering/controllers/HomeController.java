@@ -1,6 +1,7 @@
 package no.orientering.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import no.orientering.DAO.jdbc.ArticleDAO;
 import no.orientering.models.Article;
+import no.orientering.utils.NetHelp;
 
 /**
  * Servlet implementation class HomeController
@@ -38,8 +40,19 @@ public class HomeController extends HttpServlet {
 		String URL = "WEB-INF/default.jsp";
 
 		ArticleDAO ad = new ArticleDAO();
-		List<Article> artlist = ad.getArticles();
-		
+		List<Article> artlist = null;
+		String id = request.getParameter("articleID");
+		if (!NetHelp.isNullOrEmpty(id)) {
+			int aid = Integer.parseInt(id);
+			if(aid > 0){
+				artlist = new ArrayList<Article>();
+				artlist.add(ad.getArticle(aid));
+			}
+		}else {
+			 artlist = ad.getArticles();
+		}
+
+
 		request.setAttribute("articles", artlist);
 		RequestDispatcher dispatcher = request.getRequestDispatcher(URL);
 		dispatcher.forward(request, response);
