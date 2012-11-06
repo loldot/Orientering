@@ -11,7 +11,6 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "article")
 @XmlType(propOrder = { "ID", "title", "content", "author", "publishedDate" })
-@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Article {
 	private int ID;
 	private String title;
@@ -31,7 +30,6 @@ public class Article {
 	public void setID(int iD) {
 		ID = iD;
 	}
-	@XmlElement
 	public User getAuthor() {
 		return author;
 	}

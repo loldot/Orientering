@@ -1,15 +1,12 @@
 package no.orientering.models;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.xml.bind.annotation.XmlAccessorOrder;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
+@XmlRootElement(name="author")
 @XmlAccessorType(XmlAccessType.NONE)
 public class User {
 	@XmlElement
@@ -18,7 +15,7 @@ public class User {
 	private String userName;
 	
 	private String password;
-	private Organization team;
+	private String team;
 	
 	private Person personalia;
 	private Person friend;
@@ -43,11 +40,11 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Organization getTeam() {
+	public String getTeam() {
 		return team;
 	}
 	public void setTeam(Organization team) {
-		this.team = team;
+		this.team = team.getName();
 	}
 	public Person getPersonalia() {
 		return personalia;

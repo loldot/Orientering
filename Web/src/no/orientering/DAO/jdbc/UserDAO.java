@@ -100,7 +100,7 @@ public class UserDAO {
 
 		try {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
-			conn.setAutoCommit(false);
+			conn.setAutoCommit(true);
 			String sqlStr = "Select * from Users";
 			ps = conn.prepareStatement(sqlStr);
 
@@ -170,7 +170,7 @@ public class UserDAO {
 
 		try {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
-			conn.setAutoCommit(false);
+			conn.setAutoCommit(true);
 
 			String sqlStr = "{CALL InsertUser(?,?,?,?,?,?)}";
 

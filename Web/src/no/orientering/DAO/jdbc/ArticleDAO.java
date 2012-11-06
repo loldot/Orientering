@@ -43,14 +43,14 @@ public class ArticleDAO {
 			s = conn.createStatement();
 			rs = s.executeQuery(sqlStr);
 			Article art = null;
-
+			UserDAO users = new UserDAO();
 			while (rs.next()) {
 				art = new Article();
 				art.setID(rs.getInt("ID"));
 				art.setContent(rs.getString("content"));
 				art.setPublishedDate(rs.getDate("publishDate"));
 				art.setTitle(rs.getString("title"));
-				// art.setAuthor
+				art.setAuthor(users.GetBy(rs.getInt("authorId")));
 				artList.add(art);
 			}
 		}

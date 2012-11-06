@@ -10,18 +10,19 @@ import java.util.List;
 
 import javax.naming.NamingException;
 
+import no.orientering.models.NullPerson;
 import no.orientering.models.Person;
 
 public class PersonDAO {
 
-	private Connection conn;
+	private Connection oldConn;
 
 	private SqlCommands sqlCmd;
 
 	public PersonDAO() {
 		try {
 
-			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			//oldConn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
 			sqlCmd = new SqlCommands();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -36,9 +37,8 @@ public class PersonDAO {
 		ResultSet rs = null;
 		Person p = null;
 		try {
-
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
-			conn.setAutoCommit(false);
+			conn.setAutoCommit(true);
 
 			String sqlStr = "Select * from `Persons` where ID = ?";
 
@@ -47,7 +47,7 @@ public class PersonDAO {
 
 			rs = ps.executeQuery();
 			if (!rs.first())
-				throw new Exception("Feil i getPerson");
+				return new NullPerson();
 
 			p = new Person();
 			p.setID(rs.getInt("ID"));
@@ -60,6 +60,10 @@ public class PersonDAO {
 		} catch (Exception feil) {
 			String f = feil.getMessage();
 			System.out.println(f);
+		}finally{
+			DatabaseHelper.close(rs);
+			DatabaseHelper.close(ps);
+			DatabaseHelper.close(conn);
 		}
 
 		return p;
@@ -101,8 +105,10 @@ public class PersonDAO {
 
 			conn.close();
 		} catch (Exception feil) {
-			String f = feil.getMessage();
-			System.out.println(f);
+		}finally{
+			DatabaseHelper.close(rs);
+			DatabaseHelper.close(ps);
+			DatabaseHelper.close(conn);
 		}
 
 		return persons;
@@ -114,11 +120,11 @@ public class PersonDAO {
 		ResultSet rs = null;
 		boolean deleted = true;
 		try {
-			conn.setAutoCommit(false);
+			oldConn.setAutoCommit(false);
 
 			String sqlStr = "Delete from `Person` where ID = ?";
 
-			ps = conn.prepareStatement(sqlStr);
+			ps = oldConn.prepareStatement(sqlStr);
 			ps.setInt(0, id);
 
 			rs = ps.executeQuery();
@@ -150,7 +156,7 @@ public class PersonDAO {
 				+ "Values (?,?,?,?,?)";
 
 		try {
-			PreparedStatement ps = conn.prepareStatement(sqlStr);
+			PreparedStatement ps = oldConn.prepareStatement(sqlStr);
 			ps.setString(1, p.getFirstName());
 			ps.setString(2, p.getLastName());
 			ps.setString(3, p.getPhone());
@@ -174,7 +180,7 @@ public class PersonDAO {
 				+ "Address = ?" + " WHERE `ID`= ?";
 
 		try {
-			PreparedStatement ps = conn.prepareStatement(sqlStr);
+			PreparedStatement ps = oldConn.prepareStatement(sqlStr);
 			ps.setString(1, p.getFirstName());
 			ps.setString(2, p.getLastName());
 			ps.setString(3, p.getPhone());

@@ -1,5 +1,9 @@
 package no.orientering.models;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
+@XmlAccessorType(XmlAccessType.NONE)
 public class NullPerson extends Person {
 	@Override
 	public boolean isNull() {
