@@ -10,6 +10,10 @@
 			<li><a href="index.jsp"> <span class="l"></span> <span
 					class="r"></span> <span class="t">Home</span>
 			</a></li>
+			<li class="menu-separator"></li>
+			<li><a href="PersonController"> <span class="l"></span> <span
+					class="r"></span> <span class="t">Personer</span>
+			</a></li>
 			<c:if test="${access != null }">
 				<li class="menu-separator"></li>
 				<li><a href="#"> <span class="l"></span> <span class="r"></span>

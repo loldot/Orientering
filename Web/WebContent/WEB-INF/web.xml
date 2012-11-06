@@ -33,9 +33,9 @@
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet>
-      <servlet-name>RSS</servlet-name>
-      <servlet-class>no.orientering.controllers.RSS</servlet-class>
-      <load-on-startup>1</load-on-startup>
+    <servlet-name>RSS</servlet-name>
+    <servlet-class>no.orientering.controllers.RSS</servlet-class>
+    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>RSS</servlet-name>

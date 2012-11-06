@@ -2,6 +2,14 @@
 	* {
 		
 	}
+	body,p {
+		margin: 0.5em 0;
+		font-family: Verdana, Geneva, Arial, Helvetica, Sans-Serif;
+		font-style: normal;
+		font-weight: normal;
+		font-size: 13px;
+		letter-spacing: 1px;
+	}
 	body {
 		margin: 0 auto;
 		padding: 0;
@@ -14,7 +22,7 @@
 	}
 	h1,h2,h3,h4,h5,h6,h1 a,h2 a,h3 a,h4 a,h5 a,h6 a
 h1 a:hover,h2 a:hover,h3 a:hover,h4 a:hover,h5 a:hover,h6 a:hover
-h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.art-postheader,.art-postheader a,.art-postheader a:link,.art-postheader a:visited,.art-postheader a:hover,.art-blockheader .t,.art-vmenublockheader .t,.art-logo-text,.art-logo-text a,h1.art-logo-name,h1.art-logo-name a,h1.art-logo-name a:link,h1.art-logo-name a:visited,h1.art-logo-name a:hover
+h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.postheader,.postheader a,.postheader a:link,.postheader a:visited,.postheader a:hover,.blockheader .t,.vmenublockheader .t,.logo-text,.logo-text a,h1.logo-name,h1.logo-name a,h1.logo-name a:link,h1.logo-name a:visited,h1.logo-name a:hover
 		{
 		font-weight: normal;
 		font-style: normal;
@@ -24,18 +32,18 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 		text-align: left;
 		letter-spacing: 3px;
 	}
-	a,.art-post li a {
+	a,.post li a {
 		text-decoration: underline;
 		color: #000000;
 	}
-	a:link,.art-post li a:link {
+	a:link,.post li a:link {
 		text-decoration: underline;
 		color: #000000;
 	}
-	a:visited,a.visited,.art-post li a:visited,.art-post li a.visited {
+	a:visited,a.visited,.post li a:visited,.post li a.visited {
 		color: #686C47;
 	}
-	a:hover,a.hover,.art-post li a:hover,.art-post li a.hover {
+	a:hover,a.hover,.post li a:hover,.post li a.hover {
 		text-decoration: none;
 		color: #818F00;
 	}
@@ -77,10 +85,6 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 		{
 		margin: 0;
 	}
-
-	/* begin Menu */
-
-	/* menu structure */
 	.menu a,.menu a:link,.menu a:visited,.menu a:hover {
 		text-align: left;
 		text-decoration: none;
@@ -148,6 +152,38 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 		padding: 30px 30px 30px 10px;
 		margin: -30px 0 0 -10px;
 	}
+
+	/* menu structure */
+	.menu {
+		padding-top: 0;
+		/*padding-bottom: 100px;*/
+	}
+	.nav {
+	margin-top: 10px;
+		position: relative;
+		height: 39px;
+		z-index: 100;
+	}
+	.menu-extra1 {
+		position: relative;
+		display: block;
+		float: left;
+		width: auto;
+		height: 39px;
+		background-position: center;
+	}
+	.menu-extra2 {
+		position: relative;
+		display: block;
+		float: right;
+		width: auto;
+		height: 39px;
+		background-position: center;
+	}
+	.menu {
+		float: left;
+		list-style-type: none;
+	}
 	div.nav-center {
 		position: relative;
 		float: right;
@@ -161,33 +197,6 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 	.firefox2 ul.menu {
 		float: none;
 	}
-
-	/* menu structure */
-	.menu { /*padding: 0 15px 0 15px;*/
-		
-	}
-	.nav {
-		position: relative;
-		height: 27px;
-		z-index: 100;
-	}
-	.menu-extra1 {
-		position: absolute;
-		left: 0;
-		top: 0;
-		width: auto;
-		height: 27px;
-		background-position: center;
-	}
-	.menu-extra2 {
-		position: absolute;
-		right: 0;
-		top: 0;
-		width: auto;
-		height: 27px;
-		background-position: center;
-	}
-
 	/* images in menu items */
 	ul.menu img.menu-image,ul.menu img.menu-image-left {
 		vertical-align: middle;
@@ -207,8 +216,12 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 		height: 27px;
 		cursor: pointer;
 		text-decoration: none;
+		margin-left: 4px;
+		margin-right: 4px;
+		
 	}
 	.menu ul li {
+		list-style-type: none;
 		margin: 0;
 		clear: both;
 	}
@@ -222,19 +235,21 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 	}
 	.menu a .l {
 		left: 0;
-		right: 0;
+		right: 12px;
 	}
 	.menu a .r {
-		width: 400px;
+		width: 424px;
 		right: 0;
-		clip: rect(auto, auto, auto, 400px);
+		clip: rect(auto, auto, auto, 412px);
 	}
 	.menu a .t {
 		margin-right: 10px;
 		margin-left: 10px;
-		color: #485661;
-		padding: 0 17px;
-		margin: 0 0;
+		font-weight: bold;
+		text-transform: uppercase;
+		color: #000000;
+		padding: 0 11px;
+		margin: 0 12px;
 		line-height: 27px;
 		text-align: center;
 	}
@@ -248,22 +263,28 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 		top: -27px;
 	}
 	.menu a:hover .t {
-		color: #0D1012;
+		color: #F4F5F0;
 	}
 	.menu li:hover a .t {
-		color: #0D1012;
+		color: #F4F5F0;
 	}
 	.menu li:hover>a .t {
-		color: #0D1012;
+		color: #F4F5F0;
+	}
+	.menu a.active .l,.menu a.active .r {
+		top: -54px;
+	}
+	.menu a.active .t {
+		color: #F2F3EC;
 	}
 	.menu a:hover.separator-without-submenu {
 		cursor: default;
 	}
 	.menu a:hover.separator-without-submenu .t {
-		color: #485661;
+		color: #000000;
 	}
 	.menu li:hover a.separator-without-submenu .t {
-		color: #485661;
+		color: #000000;
 	}
 	a:hover.separator-without-submenu .r,a:hover.separator-without-submenu .l
 		{
@@ -274,7 +295,7 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 	/* begin MenuSeparator */
 	.menu .menu-li-separator {
 		display: block;
-		width: 1px;
+		width: 9px;
 		height: 27px;
 	}
 	.nav .menu-separator {
@@ -300,7 +321,7 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 		background-repeat: repeat-x;
 		border-width: 1px;
 		border-style: solid;
-		border-color: #E892BA;
+		border-color: #B7CB72;
 	}
 	.nav ul.menu ul span,.nav ul.menu ul span span {
 		display: inline;
@@ -317,20 +338,21 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 		text-indent: 12px;
 		text-decoration: none;
 		line-height: 32px;
-		color: #000000;
+		color: #3A4319;
 		margin-right: 10px;
 		margin-left: 10px;
+		font-size: 12px;
 		margin: 0;
 		padding: 0;
 	}
 	.menu ul li a:hover {
 		color: #000000;
-		border-color: #E06CA2;
+		border-color: #A5BD4C;
 		background-position: 0 -32px;
 	}
 	.menu ul li:hover>a {
 		color: #000000;
-		border-color: #E06CA2;
+		border-color: #A5BD4C;
 		background-position: 0 -32px;
 	}
 	.nav .menu ul li a:hover span,.nav .menu ul li a:hover span span {
@@ -378,7 +400,7 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 	}
 	#top {
 		width: 100%;
-		height: 39px;
+		height: 50px;
 	}
 	#navigation {
 		
@@ -412,7 +434,7 @@ h1 a:visited,h2 a:visited,h3 a:visited,h4 a:visited,h5 a:visited,h6 a:visited,.a
 			100%); /* IE10+ */
 		background: linear-gradient(to bottom, #bfd255 0%, #8eb92a 50%, #72aa00 51%, #9ecb2d
 			100%); /* W3C */
-		filter: progid:DXImageTransform.Microsoft.gradient(          startColorstr='#bfd255',
+		filter: progid:DXImageTransform.Microsoft.gradient(               startColorstr='#bfd255',
 			endColorstr='#9ecb2d', GradientType=0 ); /* IE6-9 */
 		color: #efefef;
 		border-bottom: 1px #003300 solid;
