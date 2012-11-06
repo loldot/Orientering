@@ -7,7 +7,7 @@
 		<div class="r"></div>
 		<ul class="menu">
 			<%-- Menu item --%>
-			<li><a href="index.jsp"> <span class="l"></span> <span
+			<li><a href="HomeController"> <span class="l"></span> <span
 					class="r"></span> <span class="t">Home</span>
 			</a></li>
 			<li class="menu-separator"></li>
