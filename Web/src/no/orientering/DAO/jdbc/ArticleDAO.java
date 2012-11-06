@@ -72,20 +72,20 @@ public class ArticleDAO {
 		String sqlStr = "Select * from articles where ID = ?";
 		try {
 			PreparedStatement ps = oldConn.prepareStatement(sqlStr);
-			ps.setInt(0, ID);
+			ps.setInt(1, ID);
 			ResultSet rs = sqlCmd.makeResultSet(ps);
 			if (!rs.next())
 				throw new SQLException("No match");
 
-			
+			UserDAO users = new UserDAO();			
 			art = new Article();
 			art.setID(rs.getInt("ID"));
 			art.setContent(rs.getString("Content"));
 			art.setPublishedDate(rs.getDate("PublishedDate"));
 			art.setTitle(rs.getString("Title"));
-			// art.setAuthor
+			art.setAuthor(users.GetBy(rs.getInt("authorId")));
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
