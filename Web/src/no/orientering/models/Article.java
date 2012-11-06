@@ -2,12 +2,16 @@ package no.orientering.models;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 @XmlRootElement(name = "article")
-@XmlType(propOrder = { "id", "title", "content", "author", "publishedDate" })
+@XmlType(propOrder = { "ID", "title", "content", "author", "publishedDate" })
+@XmlAccessorType(XmlAccessType.PROPERTY)
 public class Article {
 	private int ID;
 	private String title;
@@ -27,6 +31,7 @@ public class Article {
 	public void setID(int iD) {
 		ID = iD;
 	}
+	@XmlElement
 	public User getAuthor() {
 		return author;
 	}
