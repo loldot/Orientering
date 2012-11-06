@@ -35,7 +35,7 @@ public class ArticleDAO {
 		Statement s = null;
 		ResultSet rs = null;
 
-		String sqlStr = "SELECT * FROM articles ORDER BY publishDate";
+		String sqlStr = "SELECT * FROM articles ORDER BY publishDate desc";
 
 		try {
 			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
