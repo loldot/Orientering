@@ -113,54 +113,60 @@ public class ArticleDAO {
 		return saved;
 	}
 
-	private int saveNew(Article art) {
+	public int saveNew(Article art) {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
+		Connection conn = null;
 		int saved = -1;
 
-		String sqlStr = "Insert into `Articles` set (`Title`,`Content`"
-				+ "`PublishedDate`,`AuthorID`) Values" + "(?,?,?,?)";
+		String sqlStr = "Insert into Articles (Title,Content,"
+				+ "publishDate,AuthorID) Values" + "(?,?,?,?)";
 		try {
-			ps = oldConn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
-			ps.setString(0, art.getTitle());
-			ps.setString(1, art.getContent());
-			ps.setDate(2, new java.sql.Date(art.getPublishedDate().getTime()));
-			ps.setInt(3, art.getAuthor().getUserId());
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			conn.setAutoCommit(true);
+			ps = conn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, art.getTitle());
+			ps.setString(2, art.getContent());
+			ps.setDate(3, new java.sql.Date(art.getPublishedDate().getTime()));
+			ps.setInt(4, art.getAuthor().getUserId());
 			
-			sqlCmd.ExecuteNonQuery(ps);
+			ps.executeUpdate();
 			rs = ps.getGeneratedKeys();
 			
 			if(rs.next())
 				return rs.getInt(1);
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally{
 			DatabaseHelper.close(ps);
 			DatabaseHelper.close(rs);
+			DatabaseHelper.close(conn);
 		}
 		return saved;
 
 	}
 
-	private int updateArticle(Article art) {
-
+	public int updateArticle(Article art) {
+		PreparedStatement ps = null;
+		Connection conn = null;
+		
 		int updated = -1;
 		String sqlStr = "Update Articles set " + "Title = ?," + "Content = ?,"
 				+ "AuthorID = ?" + " WHERE ID = ?";
 		try {
-			PreparedStatement ps = oldConn.prepareStatement(sqlStr);
-			ps.setString(0, art.getTitle());
-			ps.setString(1, art.getContent());
-			ps.setInt(2, art.getAuthor().getUserId());
-			ps.setInt(3, art.getID());
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			conn.setAutoCommit(true);
+			ps = conn.prepareStatement(sqlStr, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, art.getTitle());
+			ps.setString(2, art.getContent());
+			ps.setInt(3, art.getAuthor().getUserId());
+			ps.setInt(4, art.getID());
 
-			sqlCmd.ExecuteNonQuery(ps);
+			ps.executeUpdate();
 			return art.getID();
 
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return updated;
