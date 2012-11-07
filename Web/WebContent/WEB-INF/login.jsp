@@ -16,6 +16,7 @@
 				</div>
 				<div>
 					<input type="submit" value="Sign in" />
+					<a href="UserController">Ny bruker</a>
 				</div>
 
 

@@ -61,15 +61,17 @@ public class UserController extends HttpServlet {
 
 			}
 		} else {
+			URL = "WEB-INF/registration.jsp";
 			if (access != null) {
-				request.setAttribute("user", access);
-			} else {
-				response.sendRedirect("HomeController");
-				/*List<User> users = ud.getUsers();
-				URL = "WEB-INF/userlist.jsp";
-				request.setAttribute("users", users);*/
+							request.setAttribute("user", access);
+			} 
+				
+				/*
+				 * List<User> users = ud.getUsers(); URL =
+				 * "WEB-INF/userlist.jsp"; request.setAttribute("users", users);
+				 */
 
-			}
+			
 
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(URL);
@@ -87,6 +89,7 @@ public class UserController extends HttpServlet {
 		User u = null;
 		String id = request.getParameter("userID");
 		UserDAO ud = new UserDAO();
+		HttpSession session = request.getSession();
 
 		if (!NetHelp.isNullOrEmpty(id)) {
 			int uid = Integer.parseInt(id);
@@ -94,7 +97,7 @@ public class UserController extends HttpServlet {
 				// edit
 				u = editUser(uid, request);
 				if (u != null) {
-
+					
 				}
 			}
 		} else {
@@ -103,6 +106,8 @@ public class UserController extends HttpServlet {
 			if (u != null) {
 				if (ud.insertPerson(u) > -1) {
 					// success
+					session.setAttribute("access",u);
+					response.sendRedirect("HomeController");
 				}
 
 			}
@@ -149,6 +154,10 @@ public class UserController extends HttpServlet {
 				u.setFriend(friend);
 			} else {
 				u.setFriend(new NullPerson());
+			}
+
+			if (!NetHelp.isNullOrEmpty(request.getParameter("password"))) {
+				u.setPassword(request.getParameter("password"));
 			}
 
 		} catch (Exception ex) {
