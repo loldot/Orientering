@@ -54,7 +54,7 @@
     <servlet-name>ArticleController</servlet-name>
     <url-pattern>/ArticleController</url-pattern>
   </servlet-mapping>
-   <servlet>
+  <servlet>
     <servlet-name>HomeController</servlet-name>
     <servlet-class>no.orientering.controllers.HomeController</servlet-class>
     <load-on-startup>1</load-on-startup>
@@ -62,5 +62,14 @@
   <servlet-mapping>
     <servlet-name>HomeController</servlet-name>
     <url-pattern>/HomeController</url-pattern>
+  </servlet-mapping>
+   <servlet>
+    <servlet-name>LoginController</servlet-name>
+    <servlet-class>no.orientering.controllers.LoginController</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LoginController</servlet-name>
+    <url-pattern>/LoginController</url-pattern>
   </servlet-mapping>
 </web-app>

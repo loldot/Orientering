@@ -39,6 +39,10 @@ public class HomeController extends HttpServlet {
 		// TODO Auto-generated method stub
 		String URL = "WEB-INF/default.jsp";
 
+		String action = request.getParameter("action");
+		if(!NetHelp.isNullOrEmpty(action)){
+			
+		}
 		ArticleDAO ad = new ArticleDAO();
 		List<Article> artlist = null;
 		String id = request.getParameter("articleID");

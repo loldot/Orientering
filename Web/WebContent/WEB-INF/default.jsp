@@ -10,6 +10,7 @@
 </head>
 <body>
 	<jsp:include page="top.jsp"></jsp:include>
+	
 	<div id="content">
 
 		<c:forEach var="article" items="${articles}">

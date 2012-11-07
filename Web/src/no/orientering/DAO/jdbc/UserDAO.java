@@ -48,8 +48,8 @@ public class UserDAO {
 
 			String sql = "SELECT * FROM `Users` WHERE `userName` = ? AND `passwordHash`=?";
 			ps = conn.prepareStatement(sql);
-			ps.setString(0, userName);
-			ps.setString(1, hash);
+			ps.setString(1, userName);
+			ps.setString(2, hash);
 
 			rs = ps.executeQuery();
 			if (!rs.first())
