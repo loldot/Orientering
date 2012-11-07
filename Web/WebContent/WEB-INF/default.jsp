@@ -10,7 +10,7 @@
 </head>
 <body>
 	<jsp:include page="top.jsp"></jsp:include>
-	
+
 	<div id="content">
 
 		<c:forEach var="article" items="${articles}">
@@ -27,22 +27,26 @@
 
 				</div>
 				<div class="article_content">
-
-					<c:choose>
-						<c:when test="${fn:length(article.content)} gt 200">
-							<c:set var="substr"
-								value="${fn:substring(article.content,0,200)}" />
-							<p>${substr}...</p>
+					<c:set var="content" value="${article.content}" />
+					<c:if test="${fn:length(articles) gt 1}">
+						<c:choose>
+							<c:when test="${fn:length(article.content) >200 }">
+								<c:set var="substr" value="${fn:substring(content,-1,200)}..." />
+						<p>	${substr}</p>
 
 						</c:when>
-						<c:otherwise>
+							<c:otherwise>
 							${article.content}
 						</c:otherwise>
-					</c:choose>
-<c:if test="${fn:length(articles) gt 1}" >
+						</c:choose>
+					</c:if>
+					<c:if test="${fn:length(articles) gt 1}">
 
-					<p><a href="HomeController?articleID=${article.ID}"
-						class="btn">Les mer..</a></p></c:if>
+						<p>
+							<a href="HomeController?articleID=${article.ID}" class="btn">Les
+								mer..</a>
+						</p>
+					</c:if>
 
 				</div>
 				<div class="article_footer"></div>

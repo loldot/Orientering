@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import no.orientering.DAO.jdbc.PersonDAO;
 import no.orientering.DAO.jdbc.UserDAO;
@@ -45,7 +46,8 @@ public class UserController extends HttpServlet {
 		PersonDAO pd = new PersonDAO();
 		List<Person> pList = pd.getPersons();
 		UserDAO ud = new UserDAO();
-
+		HttpSession session = request.getSession();
+		User access = (User) session.getAttribute("access");
 		request.setAttribute("persons", pList);
 
 		if (!NetHelp.isNullOrEmpty(id)) {
@@ -59,9 +61,15 @@ public class UserController extends HttpServlet {
 
 			}
 		} else {
-			List<User> users = ud.getUsers();
-			URL = "WEB-INF/userlist.jsp";
-			request.setAttribute("users", users);
+			if (access != null) {
+				request.setAttribute("user", access);
+			} else {
+				response.sendRedirect("HomeController");
+				/*List<User> users = ud.getUsers();
+				URL = "WEB-INF/userlist.jsp";
+				request.setAttribute("users", users);*/
+
+			}
 
 		}
 		RequestDispatcher dispatcher = request.getRequestDispatcher(URL);
@@ -158,15 +166,16 @@ public class UserController extends HttpServlet {
 
 		PersonDAO pd = new PersonDAO();
 		try {
-			
+
 			u = new User();
 			String ecID = request.getParameter("ec");
 			String fID = request.getParameter("friend");
-			
+
 			personalia = new Person();
 			personalia.setFirstName(request.getParameter("firstName"));
 			personalia.setLastName(request.getParameter("lastName"));
-			personalia.setBirthYear(Integer.parseInt(request.getParameter("birthYear")));
+			personalia.setBirthYear(Integer.parseInt(request
+					.getParameter("birthYear")));
 			personalia.setPhone(request.getParameter("phone"));
 			personalia.setAddress(request.getParameter("address"));
 
