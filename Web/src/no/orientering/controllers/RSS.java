@@ -61,7 +61,7 @@ public class RSS extends HttpServlet {
 		myRSS.setFeedType("atom_1.0");
 		
 		List<Article> recentArticles = articles.getArticles();
-		List<SyndEntry> feeds = new ArrayList<>();
+		List<SyndEntry> feeds = new ArrayList<SyndEntry>();
 		for(int i = 0; i <3; i++){
 			feeds.add(recentArticles.get(i).asRSSEntry());
 		}

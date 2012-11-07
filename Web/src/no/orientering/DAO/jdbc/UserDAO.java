@@ -119,7 +119,7 @@ public class UserDAO {
 	}
 
 	private List<User> fromResultSet(ResultSet rs) throws SQLException {
-		List<User> users = new ArrayList<>();
+		List<User> users = new ArrayList<User>();
 		// For å være sikker på at vi får med alle i resultatsettet
 		rs.beforeFirst();
 
