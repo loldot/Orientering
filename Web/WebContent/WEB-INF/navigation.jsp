@@ -1,3 +1,4 @@
+<%@page import="no.orientering.utils.BtFeedReader"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,7 +11,7 @@
 			<li><a href="HomeController"> <span class="l"></span> <span
 					class="r"></span> <span class="t">Home</span>
 			</a></li>
-
+			<li><a href="<%=BtFeedReader.getLatestNews() %>">Siste nytt fra bt.no!</a></li>
 			<c:if test="${access != null }">
 
 				<li class="menu-separator"></li>
