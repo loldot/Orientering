@@ -72,7 +72,7 @@ public class ArticleController extends HttpServlet {
 		HttpSession session = request.getSession();
 		
 		User u = (User) session.getAttribute("access");
-		
+	
 		Article article = null;
 		if(!NetHelp.isNullOrEmpty(title) && !NetHelp.isNullOrEmpty(content) && u!=null){
 			article = new Article();
@@ -80,6 +80,10 @@ public class ArticleController extends HttpServlet {
 			article.setContent(content);
 			article.setTitle(title);
 			article.setPublishedDate(new Date());
+			
+			if(ad.saveNew(article) > -1){
+				response.sendRedirect("HomeController");
+			}
 			
 		}
 	}

@@ -22,7 +22,8 @@
 	var myEditor = new YAHOO.widget.SimpleEditor('msgpost', {
 		height : '300px',
 		width : '522px',
-		dompath : true
+		dompath : true,
+		handleSubmit : true
 	//Turns on the bar at the bottom
 	});
 	myEditor.render();
@@ -31,13 +32,13 @@
 		var title = document.getElementById("title");
 		var valid = false;
 		var msg = document.getElementById("msgpost");
-		if(title.length > 0){
+		if(title.value.length > 0){
 			valid = true;
 		}else {
 			alert("Tittel er påkrevd!");
 		}
 			
-		if(msg.length <= 0){
+		if(msg.value.length <= 0){
 			alert("Innhold påkrevd!");
 			valid = false;
 		}
@@ -53,7 +54,7 @@
 				<p>Tittel</p>
 				<input id="title" type="text" name="title" />
 				<div class="yui-skin-sam">
-					<textarea name="msgpost" id="msgpost" cols="50" rows="10">
+					<textarea name="msgpost" id="msgpost" cols="50" rows="10" >
     
   
 </textarea>
