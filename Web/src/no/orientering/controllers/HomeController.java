@@ -40,24 +40,25 @@ public class HomeController extends HttpServlet {
 		String URL = "WEB-INF/default.jsp";
 
 		String action = request.getParameter("action");
-		if(!NetHelp.isNullOrEmpty(action)){
-			
-		}
-		ArticleDAO ad = new ArticleDAO();
-		List<Article> artlist = null;
-		String id = request.getParameter("articleID");
-		if (!NetHelp.isNullOrEmpty(id)) {
-			int aid = Integer.parseInt(id);
-			if(aid > 0){
-				artlist = new ArrayList<Article>();
-				artlist.add(ad.getArticle(aid));
+		if (!NetHelp.isNullOrEmpty(action) && action.equalsIgnoreCase("new")) {
+			URL="newarticle.jsp";
+		} else {
+			ArticleDAO ad = new ArticleDAO();
+			List<Article> artlist = null;
+			String id = request.getParameter("articleID");
+			if (!NetHelp.isNullOrEmpty(id)) {
+				int aid = Integer.parseInt(id);
+				if (aid > 0) {
+					artlist = new ArrayList<Article>();
+					artlist.add(ad.getArticle(aid));
+				}
+			} else {
+				artlist = ad.getArticles();
 			}
-		}else {
-			 artlist = ad.getArticles();
+			request.setAttribute("articles", artlist);
 		}
 
-
-		request.setAttribute("articles", artlist);
+	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(URL);
 		dispatcher.forward(request, response);
 
