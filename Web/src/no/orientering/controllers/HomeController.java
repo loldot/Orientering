@@ -41,7 +41,7 @@ public class HomeController extends HttpServlet {
 
 		String action = request.getParameter("action");
 		if (!NetHelp.isNullOrEmpty(action) && action.equalsIgnoreCase("new")) {
-			URL="newarticle.jsp";
+			URL="WEB-INF/newarticle.jsp";
 		} else {
 			ArticleDAO ad = new ArticleDAO();
 			List<Article> artlist = null;
