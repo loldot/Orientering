@@ -7,6 +7,9 @@
 <title>Home | O-løp er OK</title>
 
 
+
+
+
 </head>
 <body>
 	<jsp:include page="top.jsp"></jsp:include>
@@ -32,9 +35,9 @@
 						<c:choose>
 							<c:when test="${fn:length(article.content) >200 }">
 								<c:set var="substr" value="${fn:substring(content,-1,200)}..." />
-						<p>	${substr}</p>
+								<p>${substr}</p>
 
-						</c:when>
+							</c:when>
 							<c:otherwise>
 							${article.content}
 						</c:otherwise>
