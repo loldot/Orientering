@@ -62,7 +62,7 @@ public class Article {
 	}
 	
 	public SyndEntry asRSSEntry(){
-		String permUrl = URI.create(String.format("/articles/%d", ID)).toString();
+		String permUrl = URI.create(String.format("/HomeController?articleID=%d", ID)).toString();
 		SyndEntry entry = new SyndEntryImpl();
 		
 		entry.setTitle(title);
