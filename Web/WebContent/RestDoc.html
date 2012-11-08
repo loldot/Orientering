@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<title>O-løp API</title>
+</head>
+<body>
+<h1>O-løp API reference</h1>
+<p>orientering.no offers a REST-API which supports the following methods:</p>
+<p>Only the url /jersey/articles is supported at the moment.</p>
+<table>
+<summary>
+A table of the supported methods in orientering.nos API
+</summary>
+	<thead>
+		<tr><th>http-verb</th><th>parameters</th><th>Input data type</th><th>Returns</th><th>Return type</th></tr>
+	</thead>
+	<tbody>
+		<tr><th>GET</th><th>None</th><th>None</th><th>Returns all articles in the system</th><th>application/xml</th></tr>
+		<tr><th>GET</th><th>id</th><th>None</th><th>Returns an article in the system with the given ID</th><th>application/xml</th></tr>
+		<tr><th>POST*</th><th>None</th><th>application/xml</th><th>Redirects you to the new article</th><th>text/html</th></tr>
+		<tr><th>PUT*</th><th>id</th><th>application/xml</th><th>Redirects you to the updated article</th><th>text/html</th></tr>
+	</tbody>
+</table>
+<p>* annotates that authentication header with a base64-encoded string of username:password is sent</p>
+<h2>Data types</h2>
+<h3>Article</h3>
+<h4>Properties</h4>
+<ul>
+<li>Id:int</li>
+<li>Author:User</li>
+<li>PublishDate:DateTime</li>
+<li>Title:String</li>
+<li>Content:String</li>
+</ul>
+<h3>Article</h3>
+<h4>Properties</h4>
+<ul>
+<li>Id:int</li>
+<li>UserName:String</li>
+</ul>
+</body>
+</html>
