@@ -45,7 +45,6 @@ public class ArticleResource {
 		if(current == null){
 			throw new WebApplicationException(Status.UNAUTHORIZED);
 		}
-		UserDAO users = new UserDAO();
 		
 		article.setAuthor(current);
 		
