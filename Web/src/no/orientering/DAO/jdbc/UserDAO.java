@@ -209,4 +209,43 @@ public class UserDAO {
 		}
 		return insertedId;
 	}
+	public int updatePerson(User user) {
+		int insertedId = -1;
+		Connection conn = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		SqlCommands sqlCmd = new SqlCommands();
+		try {
+			conn = DatabaseHelper.getConnection("java:comp/env/jdbc/noeheftig");
+			conn.setAutoCommit(true);
+
+			String sqlStr = "Update Users Set userName = ? ,passwordHash = ?, " 
+					+ "personID = ?,emergencyContactID = ?, friendID = ?";
+
+			ps = conn.prepareStatement(sqlStr,Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, user.getUserName());
+			ps.setString(2, SHA256(user.getPassword()));
+			
+			PersonDAO pd = new PersonDAO();
+			int personID = pd.savePerson(user.getPersonalia());
+			if (personID <= 0){
+				throw new Exception("Feil v/lagring person");
+			}
+			ps.setInt(3, personID);
+			ps.setInt(4,user.getEmergencyContact().getID());
+			ps.setInt(5, user.getFriend().getID());
+			
+			ps.executeUpdate();
+			insertedId = user.getUserId();
+	
+		} catch (Exception ex) {
+			String f = ex.getMessage();
+			System.out.println(f);
+		} finally {
+			DatabaseHelper.close(conn);
+			DatabaseHelper.close(ps);
+			DatabaseHelper.close(rs);
+		}
+		return insertedId;
+	}
 }
