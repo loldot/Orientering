@@ -60,7 +60,12 @@
 
 
 	</div>
-
+	<script type="text/javascript"
+		src="http://www.yr.no/sted/Norge/Hordaland/Bergen/Bergen/ekstern_boks_liten.js"></script>
+	<noscript>
+		<a href="http://www.yr.no/sted/Norge/Hordaland/Bergen/Bergen/">yr.no:
+			Værvarsel for Bergen</a>
+	</noscript>
 	<jsp:include page="bottom.jsp"></jsp:include>
 </body>
 </html>
