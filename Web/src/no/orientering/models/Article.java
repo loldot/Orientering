@@ -1,6 +1,7 @@
 package no.orientering.models;
 
 import java.net.URI;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -26,6 +27,7 @@ public class Article {
 	
 	public Article(){
 		ID = 0;
+		publishedDate = Calendar.getInstance().getTime();
 	}
 	public Article(int ID){
 		this.ID = ID;
