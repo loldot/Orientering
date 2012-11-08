@@ -15,7 +15,10 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.*;
 import javax.ws.rs.core.Response.Status;
 
+import no.orientering.models.User;
+
 import no.orientering.DAO.jdbc.ArticleDAO;
+import no.orientering.DAO.jdbc.UserDAO;
 import no.orientering.models.Article;
 import no.orientering.utils.AuthHelper;
 
@@ -38,9 +41,13 @@ public class ArticleResource {
 	
 	@POST
 	public final Response makeArticle(@HeaderParam("Authorization") final String authHeader, final Article article){
-		if(!AuthHelper.isAuthorized(authHeader)){
+		User current = AuthHelper.AuthorizeFromHeader(authHeader);
+		if(current == null){
 			throw new WebApplicationException(Status.UNAUTHORIZED);
 		}
+		UserDAO users = new UserDAO();
+		
+		article.setAuthor(current);
 		
 		final int id = db.saveNew(article);
 		return Response.created(URI.create("/" + id)).build();
@@ -49,7 +56,8 @@ public class ArticleResource {
 	@PUT
 	@Path("{id}")
 	public final void putArticle(@HeaderParam("Authorization") final String authHeader, @PathParam("id") final int id, final Article article){
-		if(!AuthHelper.isAuthorized(authHeader)){
+		User current = AuthHelper.AuthorizeFromHeader(authHeader);
+		if(current == null){
 			throw new WebApplicationException(Status.UNAUTHORIZED);
 		}
 		if(db.getArticle(id) == null){

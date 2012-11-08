@@ -1,6 +1,7 @@
 package no.orientering.utils;
 
 import no.orientering.DAO.jdbc.UserDAO;
+import no.orientering.models.User;
 
 import com.sun.jersey.core.util.Base64;
 
@@ -25,15 +26,15 @@ public final class AuthHelper {
      * @param authHeader the header
      * @return true if authenticated
      */
-    public static boolean isAuthorized(final String authHeader) {
+    public static User AuthorizeFromHeader(final String authHeader) {
     	UserDAO users = new UserDAO();
         try {
             final String[] userPass = userPassFromAuthHeader(authHeader);
 
-            return users.LogIn(userPass[0], userPass[1]) != null;
+            return users.LogIn(userPass[0], userPass[1]);
 
         } catch (final Exception e) {
-            return false;
+            return null;
         }
     }
 
