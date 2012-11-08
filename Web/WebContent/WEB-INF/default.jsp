@@ -31,18 +31,27 @@
 				</div>
 				<div class="article_content">
 					<c:set var="content" value="${article.content}" />
-					<c:if test="${fn:length(articles) gt 1}">
-						<c:choose>
-							<c:when test="${fn:length(article.content) >200 }">
-								<c:set var="substr" value="${fn:substring(content,-1,200)}..." />
-								<p>${substr}</p>
+					<c:choose>
+						<c:when test="${fn:length(articles) gt 1}">
 
-							</c:when>
-							<c:otherwise>
+							<c:choose>
+								<c:when test="${fn:length(article.content) >200 }">
+									<c:set var="substr" value="${fn:substring(content,-1,200)}..." />
+									<p>${substr}</p>
+
+								</c:when>
+								<c:otherwise>
 							${article.content}
 						</c:otherwise>
-						</c:choose>
-					</c:if>
+							</c:choose>
+						</c:when>
+						<c:otherwise>
+
+						${article.content}
+
+						</c:otherwise>
+					</c:choose>
+					
 					<c:if test="${fn:length(articles) gt 1}">
 
 						<p>
