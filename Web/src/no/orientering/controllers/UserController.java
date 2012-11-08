@@ -97,7 +97,9 @@ public class UserController extends HttpServlet {
 				// edit
 				u = editUser(uid, request);
 				if (u != null) {
-					
+					if(ud.updatePerson(u) > -1){
+						response.sendRedirect("HomeController");
+					}
 				}
 			}
 		} else {
